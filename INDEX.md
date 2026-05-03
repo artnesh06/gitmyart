@@ -1,4 +1,4 @@
-# 📑 DropStudio.fun - Documentation Index
+# 📑 Gitmyart - Documentation Index
 
 ## 🚀 Quick Start
 
@@ -78,7 +78,7 @@
 ## 📊 Project Structure
 
 ```
-dropstudio-fun/
+gitmyart/
 ├── 📄 00_START_HERE.md              ← START HERE!
 ├── 📄 INDEX.md                      ← You are here
 ├── 📄 READY_FOR_DEPLOYMENT.md
@@ -170,13 +170,13 @@ Admin:     http://localhost:3456/admin.html
 
 ### GitHub
 ```
-Repository: https://github.com/YOUR_USERNAME/dropstudio-fun
+Repository: https://github.com/YOUR_USERNAME/gitmyart
 ```
 
 ### Vercel
 ```
 Dashboard:  https://vercel.com/dashboard
-Live URL:   https://dropstudio-fun.vercel.app (after deployment)
+Live URL:   https://gitmyart.vercel.app (after deployment)
 ```
 
 ---

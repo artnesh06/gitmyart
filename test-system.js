@@ -1,5 +1,5 @@
 /**
- * Rebel.fun — Comprehensive System Test Suite
+ * Gitmyart — Comprehensive System Test Suite
  * Tests: Soft Stake, Raffle, Claim, HP Decay, Rewards
  * 
  * Run: node test-system.js

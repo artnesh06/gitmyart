@@ -1,4 +1,4 @@
-// Rebel.fun — Auth Routes
+// Gitmyart — Auth Routes
 const express = require('express');
 const router = express.Router();
 const { get, run, all, audit } = require('../db');

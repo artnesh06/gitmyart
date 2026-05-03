@@ -1,4 +1,4 @@
-// DropStudio.fun — App Logic (Full Dummy + Live Animations)
+// Gitmyart — App Logic (Full Dummy + Live Animations)
 const API_BASE = window.location.origin + '/api';
 let activeChain = 'megaeth'; // Default to MegaETH
 let sessionToken = sessionStorage.getItem('rebel_session') || null;
@@ -2149,17 +2149,17 @@ const AI_KB = [
   {keys:['token','coin','coins','price','market'],answer:'Here are the top coins across our supported chains:<br><br><b>Cosmos:</b> $ATOM ($1.5M), $OSMO ($890K), $STARS ($156K), $INJ ($3.2M), $TIA ($2.8M)<br><b>MegaETH:</b> $METH ($4.8M), $REBEL ($2.1M), $TURBO ($890K)<br><b>Ethereum:</b> $ETH ($12.3M), $UNI ($8.9M), $AAVE ($5.6M)<br><br>Check out the <b>Top Coins</b> ticker on the home page for live updates!'},
   {keys:['leaderboard','rank','ranking','points','top'],answer:'The Leaderboard shows who\'s on top! Here\'s how it works:<br><br>• You earn <b>10 points</b> every time you stake an NFT<br>• Plus <b>hourly rewards</b> based on your collection\'s rate and your NFTs\' HP<br>• Filter by chain or time period (All Time, 7d, 30d)<br><br>Head to the <b>Leaderboard</b> page from the sidebar to see where you rank!'},
   {keys:['wallet','connect','sign in','login','profile'],answer:'Getting started is easy!<br><br><b>1.</b> Click <b>Sign In</b> in the top right<br><b>2.</b> A demo wallet will be created for you instantly<br><b>3.</b> Click your wallet address to open your <b>Profile</b><br><br>Your profile shows your wallet address, active chain, balance, staked NFTs count, and total earnings. You can disconnect anytime from there.'},
-  {keys:['settings','theme','dark','light','font','corner'],answer:'Make Rebel.fun yours! Click the <b>gear icon</b> to open Settings:<br><br>• <b>Theme:</b> Dark (pure black), System (charcoal), or Bright (white)<br>• <b>Corners:</b> Rounded or Sharp edges<br>• <b>Font:</b> Sans-serif, Serif, or Pixel style<br>• <b>Background Color:</b> Pick any color with the spectrum picker<br><br>Hit <b>Save</b> and your preferences stick around!'},
+  {keys:['settings','theme','dark','light','font','corner'],answer:'Make Gitmyart yours! Click the <b>gear icon</b> to open Settings:<br><br>• <b>Theme:</b> Dark (pure black), System (charcoal), or Bright (white)<br>• <b>Corners:</b> Rounded or Sharp edges<br>• <b>Font:</b> Sans-serif, Serif, or Pixel style<br>• <b>Background Color:</b> Pick any color with the spectrum picker<br><br>Hit <b>Save</b> and your preferences stick around!'},
   {keys:['stargaze','sgpk','punks'],answer:'<b>Stargaze Punks (SGPK)</b> is one of the OG Cosmos collections!<br><br>• Chain: Cosmos<br>• Floor: 1.2 ATOM<br>• Reward: 5.5 pts/day<br>• A beloved community collection on Stargaze'},
   {keys:['bad kids','bkids'],answer:'<b>Bad Kids (BKIDS)</b> — the premium Cosmos collection!<br><br>• Chain: Cosmos<br>• Floor: 3.8 ATOM<br>• Reward: 8.2 pts/day<br>• Known for high rewards and strong community'},
   {keys:['bored ape','bayc'],answer:'<b>Bored Apes (BAYC)</b> — the blue chip of blue chips!<br><br>• Chain: Ethereum<br>• Floor: 15.2 ETH<br>• Reward: 25 pts/day<br>• The most iconic NFT collection in crypto'},
-  {keys:['hello','hi','hey','sup','yo','halo','hai'],answer:'Hey there! 👋 Welcome to Rebel.fun! I\'m your assistant — ask me anything about staking, raffles, collections, or just chat! What\'s on your mind?'},
+  {keys:['hello','hi','hey','sup','yo','halo','hai'],answer:'Hey there! 👋 Welcome to Gitmyart! I\'m your assistant — ask me anything about staking, raffles, collections, or just chat! What\'s on your mind?'},
   {keys:['thanks','thank','thx','ty','makasih','terima kasih'],answer:'You\'re welcome! 😊 Glad I could help. Feel free to ask anything else!'},
   {keys:['help','what can you do','commands','apa aja'],answer:'I can help you with lots of things! Here are some ideas:<br><br>• <b>"How to stake"</b> — step-by-step guide<br>• <b>"Raffles"</b> — how they work<br>• <b>"Collections"</b> — browse all NFT collections<br>• <b>"Claim rewards"</b> — collect your earnings<br>• <b>"Chains"</b> — supported networks<br>• <b>"Settings"</b> — customize your experience<br>• Or just say <b>hi</b> and chat! 😄'},
   {keys:['good','great','nice','cool','awesome','keren','bagus'],answer:'Thanks! 🎉 Glad you\'re enjoying it. Anything else you\'d like to know?'},
   {keys:['bye','goodbye','see you','later'],answer:'See you later! 👋 Come back anytime. Happy staking!'},
-  {keys:['who are you','what are you','siapa'],answer:'I\'m Rebel Assistant — your friendly AI helper for Rebel.fun! I know everything about the platform and I\'m always happy to chat. Ask me anything! 🤖'},
-  {keys:['how are you','apa kabar','gimana'],answer:'I\'m doing great, thanks for asking! 😊 Ready to help you with anything on Rebel.fun. What would you like to know?'},
+  {keys:['who are you','what are you','siapa'],answer:'I\'m Rebel Assistant — your friendly AI helper for Gitmyart! I know everything about the platform and I\'m always happy to chat. Ask me anything! 🤖'},
+  {keys:['how are you','apa kabar','gimana'],answer:'I\'m doing great, thanks for asking! 😊 Ready to help you with anything on Gitmyart. What would you like to know?'},
 ];
 
 function openSearchAI() {

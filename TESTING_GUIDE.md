@@ -1,4 +1,4 @@
-# 🧪 TESTING GUIDE - DropStudio.fun React App
+# 🧪 TESTING GUIDE - Gitmyart React App
 
 **Last Updated:** May 3, 2026  
 **Status:** Ready for Testing
@@ -14,7 +14,7 @@ npm run dev
 
 **Expected Output:**
 ```
-[0] 🚀 DropStudio.fun server running on http://localhost:3456
+[0] 🚀 Gitmyart server running on http://localhost:3456
 [1] ➜  Local:   http://localhost:5173/
 ```
 

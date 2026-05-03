@@ -1,4 +1,4 @@
-// Rebel.fun — AI Chat Route (Groq + DB search)
+// Gitmyart — AI Chat Route (Groq + DB search)
 const express = require('express');
 const router = express.Router();
 const { all, get } = require('../db');
@@ -34,7 +34,7 @@ ${liveRaffles.map(r => `- ${r.name} (${r.token}) — ${r.price} per entry, ${r.c
 `;
 }
 
-const SYSTEM_PROMPT = `You are Drop Assistant, a friendly AI for DropStudio.fun — a multi-chain NFT staking and raffle platform.
+const SYSTEM_PROMPT = `You are Drop Assistant, a friendly AI for Gitmyart — a multi-chain NFT staking and raffle platform.
 
 You can chat about ANYTHING — be natural, fun, helpful. Not limited to platform topics.
 When users ask about collections, tokens, points, accounts, leaderboard, or raffles — use the LIVE DATA provided below to give accurate answers.

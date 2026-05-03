@@ -1,4 +1,4 @@
-// Rebel.fun — Backend Server
+// Gitmyart — Backend Server
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -72,7 +72,7 @@ require('./cron');
 
 // ===== START =====
 app.listen(PORT, () => {
-  console.log(`\n🚀 DropStudio.fun server running on http://localhost:${PORT}`);
+  console.log(`\n🚀 Gitmyart server running on http://localhost:${PORT}`);
   console.log(`📊 API: http://localhost:${PORT}/api/health`);
   console.log(`🎮 Frontend: http://localhost:${PORT}\n`);
 });

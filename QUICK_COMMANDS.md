@@ -5,10 +5,10 @@
 ### Create GitHub Repository
 ```bash
 # 1. Go to https://github.com/new
-# 2. Create repo named: dropstudio-fun
+# 2. Create repo named: gitmyart
 # 3. Then run:
 
-git remote add origin https://github.com/YOUR_USERNAME/dropstudio-fun.git
+git remote add origin https://github.com/YOUR_USERNAME/gitmyart.git
 git branch -M main
 git push -u origin main
 ```
@@ -18,7 +18,7 @@ git push -u origin main
 1. Go to https://vercel.com/dashboard
 2. Click "Add New..." → "Project"
 3. Click "Import Git Repository"
-4. Search for "dropstudio-fun"
+4. Search for "gitmyart"
 5. Click "Import"
 6. Click "Deploy"
 7. Wait for deployment
@@ -256,13 +256,13 @@ API:       http://localhost:3456/api/
 
 ### GitHub
 ```
-Repository: https://github.com/YOUR_USERNAME/dropstudio-fun
+Repository: https://github.com/YOUR_USERNAME/gitmyart
 ```
 
 ### Vercel
 ```
 Dashboard:  https://vercel.com/dashboard
-Live URL:   https://dropstudio-fun.vercel.app (after deployment)
+Live URL:   https://gitmyart.vercel.app (after deployment)
 ```
 
 ---
@@ -287,7 +287,7 @@ Live URL:   https://dropstudio-fun.vercel.app (after deployment)
 # Go to https://github.com/new
 
 # 2. Push to GitHub (2 min)
-git remote add origin https://github.com/YOUR_USERNAME/dropstudio-fun.git
+git remote add origin https://github.com/YOUR_USERNAME/gitmyart.git
 git push -u origin main
 
 # 3. Deploy to Vercel (10 min)
@@ -357,7 +357,7 @@ git remote -v
 git remote remove origin
 
 # Add new remote
-git remote add origin https://github.com/YOUR_USERNAME/dropstudio-fun.git
+git remote add origin https://github.com/YOUR_USERNAME/gitmyart.git
 ```
 
 ---

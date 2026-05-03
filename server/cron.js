@@ -1,4 +1,4 @@
-// Rebel.fun — Cron Jobs
+// Gitmyart — Cron Jobs
 const cron = require('node-cron');
 const { all, run, get, getConfig, audit } = require('./db');
 

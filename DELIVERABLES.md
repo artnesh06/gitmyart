@@ -1,4 +1,4 @@
-# DropStudio.fun React + Vite Migration - Deliverables
+# Gitmyart React + Vite Migration - Deliverables
 
 ## ✅ Completed Tasks
 

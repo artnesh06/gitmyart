@@ -1,4 +1,4 @@
-// Rebel.fun — Leaderboard Routes
+// Gitmyart — Leaderboard Routes
 const express = require('express');
 const router = express.Router();
 const { all } = require('../db');

@@ -1,5 +1,5 @@
 {
-  "name": "rebel-gallery",
+  "name": "gitmyart",
   "version": "1.0.0",
   "main": "server/index.js",
   "scripts": {

@@ -1,4 +1,4 @@
-// Rebel.fun — Seed demo data
+// Gitmyart — Seed demo data
 const { db, run, all, setConfig } = require('./db');
 
 console.log('[SEED] Seeding demo data...');

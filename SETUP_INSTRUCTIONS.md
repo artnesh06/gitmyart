@@ -1,4 +1,4 @@
-# DropStudio.fun - React + Vite Setup Instructions
+# Gitmyart - React + Vite Setup Instructions
 
 ## Quick Start
 

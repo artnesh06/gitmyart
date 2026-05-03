@@ -1,7 +1,7 @@
 # Project Structure
 
 ```
-rebel-gallery/
+gitmyart/
 ├── index.html              # Single-page app entry point
 ├── app.js                  # All client-side JavaScript (DOM, API calls, rendering)
 ├── styles.css              # All CSS styles

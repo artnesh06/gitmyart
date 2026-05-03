@@ -1,4 +1,4 @@
-// Rebel.fun — Middleware (session, rate limit, security)
+// Gitmyart — Middleware (session, rate limit, security)
 const crypto = require('crypto');
 
 const SESSION_SECRET = process.env.SESSION_SECRET || 'rebel-fun-dev-secret-change-in-prod';

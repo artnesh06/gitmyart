@@ -1,4 +1,4 @@
-# 📚 System Documentation — Rebel.fun Admin Panel
+# 📚 System Documentation — Gitmyart Admin Panel
 
 ## Apa Itu?
 

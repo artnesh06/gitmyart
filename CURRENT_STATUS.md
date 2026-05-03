@@ -1,7 +1,7 @@
-# DropStudio.fun - Current Status Report
+# Gitmyart - Current Status Report
 
 **Date:** May 3, 2026  
-**Project:** DropStudio.fun (Multi-chain NFT Staking & Raffle Platform)  
+**Project:** Gitmyart (Multi-chain NFT Staking & Raffle Platform)  
 **Overall Progress:** 75% → 85%
 
 ---
@@ -77,12 +77,12 @@
 
 ### Step 1: Create GitHub Repository
 1. Go to https://github.com/new
-2. Create repository named `dropstudio-fun`
+2. Create repository named `gitmyart`
 3. Leave "Initialize repository" unchecked
 
 ### Step 2: Push Code to GitHub
 ```bash
-git remote add origin https://github.com/YOUR_USERNAME/dropstudio-fun.git
+git remote add origin https://github.com/YOUR_USERNAME/gitmyart.git
 git branch -M main
 git push -u origin main
 ```
@@ -91,7 +91,7 @@ git push -u origin main
 1. Go to https://vercel.com/dashboard
 2. Click "Add New..." → "Project"
 3. Select "Import Git Repository"
-4. Search for and select "dropstudio-fun"
+4. Search for and select "gitmyart"
 5. Configure:
    - Framework: React
    - Build Command: `npm run build`
@@ -99,7 +99,7 @@ git push -u origin main
 6. Click "Deploy"
 
 ### Step 4: Get Live URL
-- Vercel will provide a URL like: `https://dropstudio-fun.vercel.app`
+- Vercel will provide a URL like: `https://gitmyart.vercel.app`
 - This will be your live deployment
 
 ---

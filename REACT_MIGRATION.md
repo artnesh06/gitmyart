@@ -1,12 +1,12 @@
 # React + Vite Migration Guide
 
 ## Overview
-DropStudio.fun telah dimigrasikan dari vanilla JavaScript ke React + Vite dengan RainbowKit untuk wallet connection.
+Gitmyart telah dimigrasikan dari vanilla JavaScript ke React + Vite dengan RainbowKit untuk wallet connection.
 
 ## Project Structure
 
 ```
-rebel-gallery/
+gitmyart/
 ├── src/
 │   ├── components/
 │   │   ├── Sidebar.jsx          # Left navigation sidebar

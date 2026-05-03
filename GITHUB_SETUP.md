@@ -11,7 +11,7 @@
 ### Option A: Using GitHub Web Interface (Recommended)
 1. Go to https://github.com/new
 2. Fill in the form:
-   - **Repository name:** `dropstudio-fun`
+   - **Repository name:** `gitmyart`
    - **Description:** Multi-chain NFT staking and raffle platform
    - **Visibility:** Public (or Private if preferred)
    - **Initialize repository:** Leave unchecked (we already have local commits)
@@ -19,7 +19,7 @@
 
 ### Option B: Using GitHub CLI (if installed)
 ```bash
-gh repo create dropstudio-fun --public --source=. --remote=origin --push
+gh repo create gitmyart --public --source=. --remote=origin --push
 ```
 
 ## Step 2: Add Remote and Push to GitHub
@@ -28,7 +28,7 @@ After creating the repository on GitHub, run these commands:
 
 ```bash
 # Add the remote (replace YOUR_USERNAME with your GitHub username)
-git remote add origin https://github.com/YOUR_USERNAME/dropstudio-fun.git
+git remote add origin https://github.com/YOUR_USERNAME/gitmyart.git
 
 # Verify the remote was added
 git remote -v
@@ -40,7 +40,7 @@ git push -u origin main
 
 ## Step 3: Verify on GitHub
 
-1. Go to https://github.com/YOUR_USERNAME/dropstudio-fun
+1. Go to https://github.com/YOUR_USERNAME/gitmyart
 2. Verify all commits are there
 3. Check that all files are visible
 
@@ -58,7 +58,7 @@ git push -u origin main
 2. **Create New Project**
    - Click "Add New..." → "Project"
    - Select "Import Git Repository"
-   - Search for "dropstudio-fun"
+   - Search for "gitmyart"
    - Click "Import"
 
 3. **Configure Project**
@@ -78,7 +78,7 @@ git push -u origin main
 
 6. **Get Your Live URL**
    - After deployment, Vercel will provide a URL like:
-   - `https://dropstudio-fun.vercel.app`
+   - `https://gitmyart.vercel.app`
 
 ## Step 5: Configure Backend (Optional)
 

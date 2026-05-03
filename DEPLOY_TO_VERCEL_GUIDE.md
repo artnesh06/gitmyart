@@ -19,7 +19,7 @@
 - Pergi ke: **https://github.com/new**
 
 ### 1.2 Isi Form
-- **Repository name:** `dropstudio-fun`
+- **Repository name:** `gitmyart`
 - **Description:** `NFT Staking & Raffle Platform` (opsional)
 - **Public** (pilih ini!)
 - **Jangan** centang "Initialize this repository with a README"
@@ -29,7 +29,7 @@
 ### 1.4 Copy URL
 Setelah repo dibuat, Anda akan lihat halaman dengan kode. Di bagian atas, ada URL seperti:
 ```
-https://github.com/YOUR_USERNAME/dropstudio-fun.git
+https://github.com/YOUR_USERNAME/gitmyart.git
 ```
 
 **COPY URL INI!** (Ganti YOUR_USERNAME dengan username GitHub Anda)
@@ -41,7 +41,7 @@ https://github.com/YOUR_USERNAME/dropstudio-fun.git
 Saya akan jalankan command ini untuk push code:
 
 ```bash
-git remote add origin https://github.com/YOUR_USERNAME/dropstudio-fun.git
+git remote add origin https://github.com/YOUR_USERNAME/gitmyart.git
 git branch -M main
 git push -u origin main
 ```
@@ -63,7 +63,7 @@ git push -u origin main
 ### 3.3 Paste GitHub URL
 - Paste URL GitHub Anda:
   ```
-  https://github.com/YOUR_USERNAME/dropstudio-fun
+  https://github.com/YOUR_USERNAME/gitmyart
   ```
 - Click **"Continue"**
 
@@ -72,7 +72,7 @@ Vercel akan tanya konfigurasi. Isi seperti ini:
 
 | Field | Value |
 |-------|-------|
-| **Project Name** | `dropstudio-fun` |
+| **Project Name** | `gitmyart` |
 | **Framework** | `Vite` |
 | **Root Directory** | `./` (biarkan default) |
 | **Build Command** | `npm run build` |
@@ -96,7 +96,7 @@ VITE_ETHERSCAN_API_KEY=your_etherscan_api_key
 ### 3.7 SELESAI!
 Vercel akan kasih URL seperti:
 ```
-https://dropstudio-fun.vercel.app
+https://gitmyart.vercel.app
 ```
 
 **APP SUDAH LIVE!** 🎉
@@ -106,7 +106,7 @@ https://dropstudio-fun.vercel.app
 ## 📝 RINGKASAN LANGKAH
 
 1. ✅ Buka https://github.com/new
-2. ✅ Buat repo `dropstudio-fun` (Public)
+2. ✅ Buat repo `gitmyart` (Public)
 3. ✅ **COPY URL** yang GitHub kasih
 4. ✅ **KASIH URL KE SAYA**
 5. ✅ Saya push code ke GitHub
@@ -138,7 +138,7 @@ Backend masih running di localhost:3456. Untuk production, Anda perlu:
 
 **Langkah pertama:**
 1. Buka https://github.com/new
-2. Buat repo `dropstudio-fun`
+2. Buat repo `gitmyart`
 3. **COPY URL**
 4. **KASIH URL KE SAYA**
 

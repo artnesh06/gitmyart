@@ -1,4 +1,4 @@
-// Rebel.fun — Stats / Config Routes
+// Gitmyart — Stats / Config Routes
 const express = require('express');
 const router = express.Router();
 const { get, all, getConfig } = require('../db');

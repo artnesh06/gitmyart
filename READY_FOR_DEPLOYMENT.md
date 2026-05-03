@@ -1,8 +1,8 @@
-# 🚀 DropStudio.fun - READY FOR DEPLOYMENT
+# 🚀 Gitmyart - READY FOR DEPLOYMENT
 
 ## Summary
 
-Your DropStudio.fun application is **100% complete and ready to deploy to Vercel**. All components are built, tested, and verified working locally.
+Your Gitmyart application is **100% complete and ready to deploy to Vercel**. All components are built, tested, and verified working locally.
 
 ---
 
@@ -45,7 +45,7 @@ While developing:
 ### 1️⃣ Create GitHub Repository (5 min)
 
 Go to https://github.com/new and create:
-- **Name:** `dropstudio-fun`
+- **Name:** `gitmyart`
 - **Description:** Multi-chain NFT staking and raffle platform
 - **Visibility:** Public
 - Click "Create repository"
@@ -55,7 +55,7 @@ Go to https://github.com/new and create:
 Run these commands in your terminal:
 
 ```bash
-git remote add origin https://github.com/YOUR_USERNAME/dropstudio-fun.git
+git remote add origin https://github.com/YOUR_USERNAME/gitmyart.git
 git branch -M main
 git push -u origin main
 ```
@@ -67,7 +67,7 @@ Replace `YOUR_USERNAME` with your GitHub username.
 1. Go to https://vercel.com/dashboard
 2. Click "Add New..." → "Project"
 3. Click "Import Git Repository"
-4. Search for and select "dropstudio-fun"
+4. Search for and select "gitmyart"
 5. Keep default settings:
    - Framework: React
    - Build Command: `npm run build`
@@ -78,7 +78,7 @@ Replace `YOUR_USERNAME` with your GitHub username.
 ### 4️⃣ Get Your Live URL (1 min)
 
 After deployment completes, Vercel will show your live URL:
-- Example: `https://dropstudio-fun.vercel.app`
+- Example: `https://gitmyart.vercel.app`
 - This is your production deployment
 - Share this URL with users
 
@@ -212,7 +212,7 @@ Local Admin:     http://localhost:3456/admin.html
 
 1. **Create GitHub repository** (5 min)
    - Go to https://github.com/new
-   - Create `dropstudio-fun` repo
+   - Create `gitmyart` repo
 
 2. **Push code to GitHub** (2 min)
    - Run git commands above

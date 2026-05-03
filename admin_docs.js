@@ -1,5 +1,5 @@
 // ===== SYSTEM DOCUMENTATION PAGE =====
-// Halaman ini berisi dokumentasi lengkap arsitektur, struktur, dan cara kerja Rebel.fun
+// Halaman ini berisi dokumentasi lengkap arsitektur, struktur, dan cara kerja Gitmyart
 // Tujuan: Agar tim tidak lupa struktur dan mudah debug
 
 const SYSTEM_DOCS = {
@@ -7,7 +7,7 @@ const SYSTEM_DOCS = {
 # 🏗️ REBEL.FUN — SYSTEM ARCHITECTURE
 
 ## Project Overview
-Rebel.fun adalah platform multi-chain NFT staking dan raffle. Users stake NFT dari koleksi terkurasi, earn points, dan ikut raffle dengan token chain-native.
+Gitmyart adalah platform multi-chain NFT staking dan raffle. Users stake NFT dari koleksi terkurasi, earn points, dan ikut raffle dengan token chain-native.
 
 **Status:** Backend ~80% done, Frontend ~40% done (skeleton React)
 **Tech Stack:** Node.js + Express 5, SQLite, React + Vite, RainbowKit

@@ -1,4 +1,4 @@
-// Rebel.fun — Database (SQLite)
+// Gitmyart — Database (SQLite)
 const Database = require('better-sqlite3');
 const path = require('path');
 

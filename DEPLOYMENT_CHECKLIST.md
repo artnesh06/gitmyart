@@ -1,4 +1,4 @@
-# Deployment Checklist - DropStudio.fun
+# Deployment Checklist - Gitmyart
 
 ## Pre-Deployment Verification ✅
 
@@ -33,7 +33,7 @@
 ### Step 1: Create Repository
 ```
 1. Go to https://github.com/new
-2. Repository name: dropstudio-fun
+2. Repository name: gitmyart
 3. Description: Multi-chain NFT staking and raffle platform
 4. Visibility: Public
 5. Click "Create repository"
@@ -42,13 +42,13 @@
 ### Step 2: Add Remote and Push
 ```bash
 # Replace YOUR_USERNAME with your GitHub username
-git remote add origin https://github.com/YOUR_USERNAME/dropstudio-fun.git
+git remote add origin https://github.com/YOUR_USERNAME/gitmyart.git
 git branch -M main
 git push -u origin main
 ```
 
 ### Step 3: Verify on GitHub
-- Go to https://github.com/YOUR_USERNAME/dropstudio-fun
+- Go to https://github.com/YOUR_USERNAME/gitmyart
 - Verify all files are there
 - Verify all commits are visible
 
@@ -61,7 +61,7 @@ git push -u origin main
 1. Go to https://vercel.com/dashboard
 2. Click "Add New..." → "Project"
 3. Click "Import Git Repository"
-4. Search for "dropstudio-fun"
+4. Search for "gitmyart"
 5. Click "Import"
 ```
 
@@ -84,7 +84,7 @@ Install Command: npm install
 ### Step 4: Get Live URL
 ```
 After deployment completes:
-- Vercel provides a URL like: https://dropstudio-fun.vercel.app
+- Vercel provides a URL like: https://gitmyart.vercel.app
 - This is your live deployment
 - Share this URL with users
 ```
@@ -94,7 +94,7 @@ After deployment completes:
 ## Post-Deployment Verification
 
 ### Test Live Deployment
-- [ ] Visit https://dropstudio-fun.vercel.app
+- [ ] Visit https://gitmyart.vercel.app
 - [ ] Verify all pages load
 - [ ] Test sidebar navigation
 - [ ] Test right panel
@@ -240,7 +240,7 @@ npm run server
 npm run client
 
 # Git commands
-git remote add origin https://github.com/YOUR_USERNAME/dropstudio-fun.git
+git remote add origin https://github.com/YOUR_USERNAME/gitmyart.git
 git push -u origin main
 ```
 

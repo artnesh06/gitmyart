@@ -1,4 +1,4 @@
-// Rebel.fun — Raffle Routes
+// Gitmyart — Raffle Routes
 const express = require('express');
 const router = express.Router();
 const { db, get, all, run, audit } = require('../db');

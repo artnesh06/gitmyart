@@ -1,7 +1,7 @@
-# React Rebuild Complete - DropStudio.fun
+# React Rebuild Complete - Gitmyart
 
 ## Overview
-Successfully rebuilt the DropStudio.fun NFT staking and raffle platform as a complete React application with the exact same UI/UX as the original HTML/CSS/JS app.
+Successfully rebuilt the Gitmyart NFT staking and raffle platform as a complete React application with the exact same UI/UX as the original HTML/CSS/JS app.
 
 ## Project Structure
 

@@ -1,4 +1,4 @@
-# 📊 PROJECT STATUS - DropStudio.fun
+# 📊 PROJECT STATUS - Gitmyart
 
 **Last Updated:** May 3, 2026  
 **Overall Progress:** 60% → 75%  
@@ -8,7 +8,7 @@
 
 ## 🎯 PROJECT OVERVIEW
 
-**DropStudio.fun** is a multi-chain NFT staking and raffle platform built with:
+**Gitmyart** is a multi-chain NFT staking and raffle platform built with:
 - **Backend:** Node.js + Express 5 + SQLite
 - **Frontend:** React 19 + Vite + RainbowKit + Wagmi
 - **Chains:** Ethereum, MegaETH, Cosmos
@@ -170,7 +170,7 @@
 ## 📁 PROJECT STRUCTURE
 
 ```
-rebel-gallery/
+gitmyart/
 ├── index.html                  # React entry point
 ├── app.js                      # Old vanilla JS (kept for reference)
 ├── styles.css                  # Old global styles (kept for reference)

@@ -1,4 +1,4 @@
-# 🎨 DropStudio.fun - Task 2 Complete
+# 🎨 Gitmyart - Task 2 Complete
 
 **Status:** ✅ TASK 2 COMPLETE  
 **Date:** May 3, 2026  

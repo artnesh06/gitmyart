@@ -1,6 +1,6 @@
 # Product Overview
 
-Rebel.fun is a multi-chain NFT staking and raffle platform. Users connect a wallet, stake NFTs from curated collections, earn points over time, and enter raffles using various chain-native tokens.
+Gitmyart is a multi-chain NFT staking and raffle platform. Users connect a wallet, stake NFTs from curated collections, earn points over time, and enter raffles using various chain-native tokens.
 
 ## Core Features
 

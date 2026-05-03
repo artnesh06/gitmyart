@@ -1,4 +1,4 @@
-// Rebel.fun — Collection Routes
+// Gitmyart — Collection Routes
 const express = require('express');
 const router = express.Router();
 const { get, all } = require('../db');
