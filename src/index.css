@@ -1824,3 +1824,14 @@ body,.sidebar,.topbar,button,input,select,textarea{font-family:var(--font-main);
   border-color: var(--accent) !important;
   color: #fff !important;
 }
+
+/* ===== COLLECTION CARDS IN HORIZONTAL SCROLL ===== */
+.trending-track .coll-card {
+  flex: 0 0 220px;
+  scroll-snap-align: start;
+  min-width: 220px;
+}
+.trending-track .coll-card .coll-card-img {
+  width: 220px;
+  height: 220px;
+}

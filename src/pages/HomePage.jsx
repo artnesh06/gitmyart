@@ -147,27 +147,30 @@ export default function HomePage() {
             const prize = r.prize || r.prizeValue || '—'
             const img = r.img || r.image || `https://picsum.photos/seed/raffle${r.id}/400/400`
             return (
-              <div key={r.id} className="trending-card">
-                {/* Square image with overlays */}
-                <div className="trending-img">
+              <div key={r.id} className="coll-card" style={{ flex: '0 0 220px', scrollSnapAlign: 'start' }}>
+                <div className="coll-card-img">
                   <img src={img} alt={name} />
-                  {/* Bottom gradient overlay — always visible */}
-                  <div className="trending-overlay">
-                    <div className="trending-mcap">{entries.toLocaleString()}</div>
-                    <div className="trending-ticker">{token}</div>
+
+                  {/* Live badge */}
+                  <div className="coll-card-activity">
+                    <span className="live-dot"></span> LIVE
                   </div>
-                  {/* Hover overlay */}
-                  <div className="raffle-hover-btn"><span>Enter Raffle</span></div>
-                </div>
-                {/* Title + subtitle INSIDE card, below image */}
-                <div className="trending-bottom" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 4, padding: '10px 2px 2px' }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--t1)', lineHeight: 1.3 }}>{name}</div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                    <span style={{ fontSize: 12, color: 'var(--t3)', fontWeight: 500 }}>{token} · {prize}</span>
-                    <span style={{ fontSize: 12, color: 'var(--green)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
-                      <span className="trending-live-dot" style={{ width: 6, height: 6, flexShrink: 0 }}></span>
-                      {endsIn}
-                    </span>
+
+                  {/* Default overlay: entries + token — hilang saat hover */}
+                  <div className="coll-card-name-overlay">
+                    <span className="coll-card-name">{name}</span>
+                    <span className="coll-card-staked">{Number(entries).toLocaleString()} entries</span>
+                  </div>
+
+                  {/* Hover overlay: nama + prize + timer + button */}
+                  <div className="coll-card-overlay">
+                    <div className="coll-overlay-name">{name}</div>
+                    <div className="coll-overlay-desc">
+                      Prize: {prize}<br />
+                      Token: {token}<br />
+                      <span style={{ color: 'var(--green)', fontWeight: 600 }}>⏱ {endsIn}</span>
+                    </div>
+                    <button className="coll-overlay-btn buy">Enter Raffle</button>
                   </div>
                 </div>
               </div>
@@ -203,38 +206,33 @@ export default function HomePage() {
           {collections.map(coll => {
             const name = coll.name || 'Collection'
             const staked = coll.staked ?? coll.stakers ?? coll.stakedCount ?? 0
+            const desc = coll.desc || coll.description || 'Stake NFTs to earn daily rewards.'
             const rewardRate = coll.rewardRate || coll.reward_rate || null
-            const floorPrice = coll.floorPrice || coll.floor_price || null
             const img = coll.img || coll.image || `https://picsum.photos/seed/coll${coll.id}/400/400`
             const badge = coll.badge || null
             return (
-              <div key={coll.id} className="trending-card">
-                {/* Square image with overlays */}
-                <div className="trending-img">
+              <div key={coll.id} className="coll-card" style={{ flex: '0 0 220px', scrollSnapAlign: 'start' }}>
+                <div className="coll-card-img">
                   <img src={img} alt={name} />
+
+                  {/* Badge pojok kiri atas */}
                   {badge && (
-                    <div className={`coll-badge ${badge}`} style={{ zIndex: 4 }}>
+                    <div className={`coll-badge ${badge}`}>
                       {badge.charAt(0).toUpperCase() + badge.slice(1)}
                     </div>
                   )}
-                  {/* Bottom gradient overlay */}
-                  <div className="trending-overlay">
-                    <div className="trending-mcap">{staked.toLocaleString()} staked</div>
-                    <div className="trending-ticker">NFT Collection</div>
+
+                  {/* Default overlay: nama + staked count — hilang saat hover */}
+                  <div className="coll-card-name-overlay">
+                    <span className="coll-card-name">{name}</span>
+                    <span className="coll-card-staked">{Number(staked).toLocaleString()} staked</span>
                   </div>
-                  {/* Hover overlay */}
-                  <div className="raffle-hover-btn"><span>Stake NFT</span></div>
-                </div>
-                {/* Title + subtitle INSIDE card, below image */}
-                <div className="trending-bottom" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 4, padding: '10px 2px 2px' }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--t1)', lineHeight: 1.3 }}>{name}</div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                    <span style={{ fontSize: 12, color: 'var(--t3)', fontWeight: 500 }}>
-                      {staked.toLocaleString()} stakers{floorPrice ? ` · ${floorPrice}` : ''}
-                    </span>
-                    {rewardRate && (
-                      <span style={{ fontSize: 12, color: 'var(--green)', fontWeight: 700 }}>+{rewardRate} pts/day</span>
-                    )}
+
+                  {/* Hover overlay: nama + desc + button */}
+                  <div className="coll-card-overlay">
+                    <div className="coll-overlay-name">{name}</div>
+                    <div className="coll-overlay-desc">{desc}</div>
+                    <button className="coll-overlay-btn stake">Stake NFT</button>
                   </div>
                 </div>
               </div>
