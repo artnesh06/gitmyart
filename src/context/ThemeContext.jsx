@@ -1,68 +1,58 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 
-const ThemeContext = createContext()
+export const ThemeContext = createContext()
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState('system')
   const [accentColor, setAccentColor] = useState('#7c3aed')
   const [density, setDensity] = useState('normal')
+  const [bgStyle, setBgStyle] = useState('solid')
+  const [cardStyle, setCardStyle] = useState('default')
 
+  // Load settings from localStorage
   useEffect(() => {
-    // Load from localStorage
-    const savedTheme = localStorage.getItem('rebel_theme') || 'system'
-    const savedAccent = localStorage.getItem('rebel_accent') || '#7c3aed'
-    const savedDensity = localStorage.getItem('rebel_density') || 'normal'
-
-    setTheme(savedTheme)
-    setAccentColor(savedAccent)
-    setDensity(savedDensity)
-
-    applyTheme(savedTheme, savedAccent, savedDensity)
+    const saved = localStorage.getItem('dropstudio_settings')
+    if (saved) {
+      const settings = JSON.parse(saved)
+      setTheme(settings.theme || 'system')
+      setAccentColor(settings.accentColor || '#7c3aed')
+      setDensity(settings.density || 'normal')
+      setBgStyle(settings.bgStyle || 'solid')
+      setCardStyle(settings.cardStyle || 'default')
+    }
   }, [])
 
-  const applyTheme = (t, accent, dens) => {
+  // Save settings to localStorage
+  const saveSettings = () => {
+    const settings = { theme, accentColor, density, bgStyle, cardStyle }
+    localStorage.setItem('dropstudio_settings', JSON.stringify(settings))
+  }
+
+  // Apply theme to document
+  useEffect(() => {
     const html = document.documentElement
-    html.setAttribute('data-theme', t)
-    html.setAttribute('data-density', dens)
-    html.style.setProperty('--accent', accent)
-    html.style.setProperty('--accent-d', adjustColor(accent, -0.15))
-  }
-
-  const updateTheme = (newTheme) => {
-    setTheme(newTheme)
-    localStorage.setItem('rebel_theme', newTheme)
-    applyTheme(newTheme, accentColor, density)
-  }
-
-  const updateAccentColor = (color) => {
-    setAccentColor(color)
-    localStorage.setItem('rebel_accent', color)
-    applyTheme(theme, color, density)
-  }
-
-  const updateDensity = (newDensity) => {
-    setDensity(newDensity)
-    localStorage.setItem('rebel_density', newDensity)
-    applyTheme(theme, accentColor, newDensity)
-  }
+    html.setAttribute('data-theme', theme)
+    html.style.setProperty('--accent', accentColor)
+    html.setAttribute('data-density', density)
+    html.setAttribute('data-bg-style', bgStyle)
+    html.setAttribute('data-card-style', cardStyle)
+  }, [theme, accentColor, density, bgStyle, cardStyle])
 
   return (
-    <ThemeContext.Provider value={{ theme, updateTheme, accentColor, updateAccentColor, density, updateDensity }}>
+    <ThemeContext.Provider value={{
+      theme,
+      setTheme,
+      accentColor,
+      setAccentColor,
+      density,
+      setDensity,
+      bgStyle,
+      setBgStyle,
+      cardStyle,
+      setCardStyle,
+      saveSettings,
+    }}>
       {children}
     </ThemeContext.Provider>
   )
-}
-
-export function useTheme() {
-  return useContext(ThemeContext)
-}
-
-// Helper to adjust color brightness
-function adjustColor(color, percent) {
-  const num = parseInt(color.replace('#', ''), 16)
-  const amt = Math.round(2.55 * percent)
-  const R = Math.max(0, Math.min(255, (num >> 16) + amt))
-  const G = Math.max(0, Math.min(255, (num >> 8 & 0x00FF) + amt))
-  const B = Math.max(0, Math.min(255, (num & 0x0000FF) + amt))
-  return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1)
 }

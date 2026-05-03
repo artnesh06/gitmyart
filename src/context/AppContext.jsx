@@ -1,46 +1,68 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 
-const AppContext = createContext()
+export const AppContext = createContext()
 
 export function AppProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState(null)
+  const [activeChain, setActiveChain] = useState('megaeth')
+  const [currentPage, setCurrentPage] = useState('home')
   const [sessionToken, setSessionToken] = useState(null)
-  const [activeChain, setActiveChain] = useState('atom')
-  const [loading, setLoading] = useState(false)
+  const [currentUser, setCurrentUser] = useState(null)
+  const [notifications, setNotifications] = useState([])
+  const [myCoinsFilter, setMyCoinsFilter] = useState('all')
+  const [topCoinsView, setTopCoinsView] = useState('my')
 
+  const API_BASE = window.location.origin + '/api'
+
+  // Load session from storage
   useEffect(() => {
-    // Load session from localStorage
-    const token = localStorage.getItem('rebel_session')
-    if (token) {
-      setSessionToken(token)
-      // Optionally verify token with backend
-    }
+    const token = sessionStorage.getItem('rebel_session')
+    if (token) setSessionToken(token)
   }, [])
 
-  const login = (user, token, chain) => {
-    setCurrentUser(user)
-    setSessionToken(token)
-    setActiveChain(chain)
-    localStorage.setItem('rebel_session', token)
+  // API helper
+  const api = async (path, opts = {}) => {
+    const headers = { 'Content-Type': 'application/json' }
+    if (sessionToken) headers['x-session-token'] = sessionToken
+    try {
+      const r = await fetch(API_BASE + path, { ...opts, headers: { ...headers, ...opts.headers } })
+      const data = await r.json()
+      if (!r.ok) throw new Error(data.error || 'API error')
+      return data
+    } catch (e) {
+      console.warn('[API]', path, e.message)
+      return null
+    }
   }
 
-  const logout = () => {
-    setCurrentUser(null)
-    setSessionToken(null)
-    localStorage.removeItem('rebel_session')
-  }
-
-  const switchChain = (chain) => {
-    setActiveChain(chain)
+  // Add notification
+  const addNotification = (message, type = 'info') => {
+    const id = Date.now()
+    setNotifications(prev => [...prev, { id, message, type }])
+    setTimeout(() => {
+      setNotifications(prev => prev.filter(n => n.id !== id))
+    }, 5000)
   }
 
   return (
-    <AppContext.Provider value={{ currentUser, sessionToken, activeChain, loading, setLoading, login, logout, switchChain }}>
+    <AppContext.Provider value={{
+      activeChain,
+      setActiveChain,
+      currentPage,
+      setCurrentPage,
+      sessionToken,
+      setSessionToken,
+      currentUser,
+      setCurrentUser,
+      notifications,
+      addNotification,
+      myCoinsFilter,
+      setMyCoinsFilter,
+      topCoinsView,
+      setTopCoinsView,
+      api,
+      API_BASE,
+    }}>
       {children}
     </AppContext.Provider>
   )
-}
-
-export function useApp() {
-  return useContext(AppContext)
 }

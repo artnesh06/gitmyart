@@ -1,6 +1,6 @@
 import React from 'react'
 
-export class ErrorBoundary extends React.Component {
+export default class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props)
     this.state = { hasError: false, error: null }
@@ -11,28 +11,37 @@ export class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error('Error caught by boundary:', error, errorInfo)
+    console.error('Error caught:', error, errorInfo)
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ padding: '40px', textAlign: 'center', color: 'var(--t1)' }}>
-          <h2>Something went wrong</h2>
-          <p style={{ color: 'var(--t3)', marginTop: '10px' }}>{this.state.error?.message}</p>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+          padding: '20px',
+          textAlign: 'center',
+        }}>
+          <h1>Oops! Something went wrong</h1>
+          <p style={{ marginTop: '10px', color: 'rgba(255, 255, 255, 0.6)' }}>
+            {this.state.error?.message}
+          </p>
           <button
-            onClick={() => this.setState({ hasError: false })}
+            onClick={() => window.location.reload()}
             style={{
               marginTop: '20px',
               padding: '10px 20px',
               background: 'var(--accent)',
-              color: '#fff',
-              border: 'none',
+              color: 'white',
               borderRadius: '8px',
               cursor: 'pointer',
             }}
           >
-            Try again
+            Reload Page
           </button>
         </div>
       )
