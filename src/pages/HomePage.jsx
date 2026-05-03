@@ -1,6 +1,257 @@
 import React, { useContext, useState, useRef, useEffect } from 'react'
 import { AppContext } from '../context/AppContext'
 
+// ===== MYSTERY PACK CARD =====
+function MysteryPackCard() {
+  const [phase, setPhase] = useState('idle') // idle | shaking | opening | revealed
+  const [reward, setReward] = useState(null)
+
+  const REWARDS = [
+    { type: 'NFT', name: 'MegaRebel #387', rarity: 'Legendary', color: '#f59e0b', img: 'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/e92cfaf6b7d8374fccab2c59a43865/68e92cfaf6b7d8374fccab2c59a43865.png?w=500' },
+    { type: 'Token', name: '500 $REBEL', rarity: 'Epic', color: '#8b5cf6', img: null },
+    { type: 'NFT', name: 'MegaRebel #112', rarity: 'Rare', color: '#3b82f6', img: 'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/9bd966398679eb141a0ab8f0775b4b/119bd966398679eb141a0ab8f0775b4b.png?w=500' },
+    { type: 'Token', name: '100 $METH', rarity: 'Common', color: '#6b7280', img: null },
+    { type: 'NFT', name: 'MegaRebel #205', rarity: 'Epic', color: '#8b5cf6', img: 'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/038a27ca06b9325ef860eed85e38e7/0b038a27ca06b9325ef860eed85e38e7.png?w=500' },
+  ]
+
+  const handleClick = () => {
+    if (phase === 'idle') {
+      setPhase('shaking')
+      setTimeout(() => setPhase('opening'), 800)
+      setTimeout(() => {
+        const r = REWARDS[Math.floor(Math.random() * REWARDS.length)]
+        setReward(r)
+        setPhase('revealed')
+      }, 1600)
+    } else if (phase === 'revealed') {
+      setPhase('idle')
+      setReward(null)
+    }
+  }
+
+  const rarityColor = reward ? reward.color : '#7c3aed'
+
+  return (
+    <div
+      onClick={handleClick}
+      style={{
+        flex: '0 0 220px',
+        scrollSnapAlign: 'start',
+        cursor: 'pointer',
+        userSelect: 'none',
+      }}
+    >
+      <style>{`
+        @keyframes packShake {
+          0%,100% { transform: rotate(0deg) scale(1); }
+          15% { transform: rotate(-6deg) scale(1.05); }
+          30% { transform: rotate(6deg) scale(1.05); }
+          45% { transform: rotate(-4deg) scale(1.08); }
+          60% { transform: rotate(4deg) scale(1.08); }
+          75% { transform: rotate(-2deg) scale(1.06); }
+          90% { transform: rotate(2deg) scale(1.06); }
+        }
+        @keyframes packOpen {
+          0% { transform: scale(1) rotateY(0deg); opacity: 1; }
+          40% { transform: scale(1.15) rotateY(40deg); opacity: 0.7; }
+          100% { transform: scale(0) rotateY(90deg); opacity: 0; }
+        }
+        @keyframes cardReveal {
+          0% { transform: scale(0.3) rotateY(-90deg); opacity: 0; }
+          60% { transform: scale(1.1) rotateY(10deg); opacity: 1; }
+          80% { transform: scale(0.95) rotateY(-5deg); }
+          100% { transform: scale(1) rotateY(0deg); opacity: 1; }
+        }
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes floatParticle {
+          0% { transform: translateY(0) scale(1); opacity: 1; }
+          100% { transform: translateY(-60px) scale(0); opacity: 0; }
+        }
+        .mystery-pack-wrap {
+          width: 220px;
+          height: 290px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .mystery-pack-body {
+          width: 160px;
+          height: 240px;
+          border-radius: 16px;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(145deg, #1e1b4b, #312e81, #4c1d95);
+          border: 2px solid #7c3aed;
+          box-shadow: 0 0 30px rgba(124,58,237,0.5), 0 0 60px rgba(124,58,237,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+          transition: box-shadow 0.3s;
+          overflow: hidden;
+        }
+        .mystery-pack-body::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
+          background-size: 200% 200%;
+          animation: shimmer 3s linear infinite;
+          border-radius: 14px;
+        }
+        .mystery-pack-body.shaking {
+          animation: packShake 0.8s ease-in-out;
+        }
+        .mystery-pack-body.opening {
+          animation: packOpen 0.8s ease-in forwards;
+        }
+        .pack-icon {
+          font-size: 52px;
+          margin-bottom: 8px;
+          filter: drop-shadow(0 0 12px rgba(124,58,237,0.8));
+        }
+        .pack-label {
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: #a78bfa;
+          margin-bottom: 4px;
+        }
+        .pack-title {
+          font-size: 16px;
+          font-weight: 800;
+          color: #fff;
+          text-align: center;
+          padding: 0 12px;
+        }
+        .pack-tap-hint {
+          font-size: 11px;
+          color: #7c3aed;
+          margin-top: 12px;
+          animation: pulse 2s ease-in-out infinite;
+        }
+        .pack-glow-ring {
+          position: absolute;
+          width: 180px; height: 180px;
+          border-radius: 50%;
+          border: 1px solid rgba(124,58,237,0.3);
+          animation: pulse 2s ease-in-out infinite;
+          pointer-events: none;
+        }
+        .revealed-card {
+          width: 160px;
+          height: 240px;
+          border-radius: 16px;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-end;
+          overflow: hidden;
+          animation: cardReveal 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
+          border: 2px solid;
+          box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+        .revealed-card-img {
+          position: absolute;
+          inset: 0;
+          width: 100%; height: 100%;
+          object-fit: cover;
+        }
+        .revealed-card-overlay {
+          position: relative;
+          z-index: 2;
+          width: 100%;
+          padding: 12px;
+          background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+          text-align: center;
+        }
+        .revealed-rarity {
+          font-size: 10px;
+          font-weight: 800;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          margin-bottom: 4px;
+        }
+        .revealed-name {
+          font-size: 14px;
+          font-weight: 700;
+          color: #fff;
+        }
+        .revealed-type {
+          font-size: 11px;
+          color: rgba(255,255,255,0.6);
+          margin-top: 2px;
+        }
+        .particle {
+          position: absolute;
+          width: 6px; height: 6px;
+          border-radius: 50%;
+          animation: floatParticle 1s ease-out forwards;
+          pointer-events: none;
+        }
+      `}</style>
+
+      <div className="mystery-pack-wrap">
+        {/* Particles on reveal */}
+        {phase === 'revealed' && reward && [0,1,2,3,4,5].map(i => (
+          <div key={i} className="particle" style={{
+            background: rarityColor,
+            left: `${20 + i * 30}px`,
+            top: `${40 + (i % 3) * 20}px`,
+            animationDelay: `${i * 0.1}s`,
+          }} />
+        ))}
+
+        {phase !== 'revealed' ? (
+          <div className={`mystery-pack-body ${phase}`}>
+            <div className="pack-glow-ring" />
+            <div className="pack-icon">🎴</div>
+            <div className="pack-label">Mystery</div>
+            <div className="pack-title">NFT Pack</div>
+            <div className="pack-tap-hint">
+              {phase === 'idle' ? '✦ Tap to open' : phase === 'shaking' ? '✦ Shaking...' : '✦ Opening...'}
+            </div>
+          </div>
+        ) : (
+          <div className="revealed-card" style={{ borderColor: rarityColor, boxShadow: `0 0 30px ${rarityColor}66` }}>
+            {reward.img ? (
+              <img src={reward.img} alt={reward.name} className="revealed-card-img" />
+            ) : (
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: `linear-gradient(135deg, ${rarityColor}33, ${rarityColor}11)`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 48,
+              }}>
+                {reward.type === 'Token' ? '🪙' : '🎴'}
+              </div>
+            )}
+            <div className="revealed-card-overlay">
+              <div className="revealed-rarity" style={{ color: rarityColor }}>{reward.rarity}</div>
+              <div className="revealed-name">{reward.name}</div>
+              <div className="revealed-type">{reward.type} · Tap to reset</div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Label bawah */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 2px 0', fontSize: 13, fontWeight: 600 }}>
+        <span style={{ display: 'flex', alignItems: 'center', gap: 5, color: '#7c3aed', fontSize: 13, fontWeight: 700 }}>
+          <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#7c3aed', display: 'inline-block', boxShadow: '0 0 6px #7c3aed' }}></span>
+          SPECIAL
+        </span>
+        <span style={{ color: 'var(--muted)', fontSize: 12 }}>Mystery Pack</span>
+      </div>
+    </div>
+  )
+}
+
 const COINS_BY_CHAIN = {
   atom: [
     { symbol: '$ATOM', name: 'Cosmos', img: 'https://picsum.photos/seed/atom/80/80', val: '$1.5M', rawVal: 1500000, change: '+9.4%', up: true },
@@ -158,6 +409,8 @@ export default function HomePage() {
           </div>
         </div>
         <div className="trending-track" id="trendingTrack" ref={trendingRef}>
+          {/* Mystery Pack — special raffle card */}
+          <MysteryPackCard />
           {filteredRaffles.map(r => {
             const entries = r.currentEntries ?? r.entries ?? 0
             const maxEntries = r.maxEntries ?? 2000
@@ -252,8 +505,8 @@ export default function HomePage() {
                 <div className="coll-card-img" style={{ width: 290, height: 290 }}>
                   <img src={img} alt={name} />
 
-                  {/* Badge pojok kiri atas */}
-                  {badge && (
+                  {/* Badge pojok kiri atas — skip charity */}
+                  {badge && badge !== 'charity' && (
                     <div className={`coll-badge ${badge}`}>
                       {badge.charAt(0).toUpperCase() + badge.slice(1)}
                     </div>
