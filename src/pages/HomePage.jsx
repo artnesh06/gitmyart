@@ -1,254 +1,309 @@
 import React, { useContext, useState, useRef, useEffect } from 'react'
 import { AppContext } from '../context/AppContext'
 
-// ===== MYSTERY PACK CARD =====
-function MysteryPackCard() {
-  const [phase, setPhase] = useState('idle') // idle | shaking | opening | revealed
-  const [reward, setReward] = useState(null)
+// ===== MYSTERY PACK — Pokemon Style =====
+const PACK_CARDS = [
+  { id:1, name:'MegaRebel #387', rarity:'Legendary', color:'#f59e0b', type:'NFT', img:'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/e92cfaf6b7d8374fccab2c59a43865/68e92cfaf6b7d8374fccab2c59a43865.png?w=500' },
+  { id:2, name:'MegaRebel #112', rarity:'Epic',      color:'#8b5cf6', type:'NFT', img:'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/9bd966398679eb141a0ab8f0775b4b/119bd966398679eb141a0ab8f0775b4b.png?w=500' },
+  { id:3, name:'MegaRebel #205', rarity:'Rare',      color:'#3b82f6', type:'NFT', img:'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/038a27ca06b9325ef860eed85e38e7/0b038a27ca06b9325ef860eed85e38e7.png?w=500' },
+  { id:4, name:'MegaRebel #441', rarity:'Rare',      color:'#3b82f6', type:'NFT', img:'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/c103c8a1ef82658fb71d040a023e0c/8dc103c8a1ef82658fb71d040a023e0c.png?w=500' },
+  { id:5, name:'500 $REBEL',     rarity:'Common',    color:'#6b7280', type:'Token', img:null },
+]
 
-  const REWARDS = [
-    { type: 'NFT', name: 'MegaRebel #387', rarity: 'Legendary', color: '#f59e0b', img: 'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/e92cfaf6b7d8374fccab2c59a43865/68e92cfaf6b7d8374fccab2c59a43865.png?w=500' },
-    { type: 'Token', name: '500 $REBEL', rarity: 'Epic', color: '#8b5cf6', img: null },
-    { type: 'NFT', name: 'MegaRebel #112', rarity: 'Rare', color: '#3b82f6', img: 'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/9bd966398679eb141a0ab8f0775b4b/119bd966398679eb141a0ab8f0775b4b.png?w=500' },
-    { type: 'Token', name: '100 $METH', rarity: 'Common', color: '#6b7280', img: null },
-    { type: 'NFT', name: 'MegaRebel #205', rarity: 'Epic', color: '#8b5cf6', img: 'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/038a27ca06b9325ef860eed85e38e7/0b038a27ca06b9325ef860eed85e38e7.png?w=500' },
-  ]
+const PACK_CSS = `
+  @keyframes tearTop {
+    0%   { transform: translateY(0) rotate(0deg); opacity:1; }
+    100% { transform: translateY(-120px) rotate(-15deg); opacity:0; }
+  }
+  @keyframes tearBottom {
+    0%   { transform: translateY(0) rotate(0deg); opacity:1; }
+    100% { transform: translateY(80px) rotate(8deg); opacity:0; }
+  }
+  @keyframes cardFanIn {
+    0%   { transform: translateX(var(--tx)) translateY(calc(var(--ty) + 40px)) rotate(var(--r)) scale(0.6); opacity:0; }
+    100% { transform: translateX(var(--tx)) translateY(var(--ty)) rotate(var(--r)) scale(1); opacity:1; }
+  }
+  @keyframes winReveal {
+    0%   { transform: scale(0.5) rotateY(-90deg); opacity:0; }
+    60%  { transform: scale(1.08) rotateY(8deg);  opacity:1; }
+    80%  { transform: scale(0.97) rotateY(-3deg); }
+    100% { transform: scale(1)    rotateY(0deg);  opacity:1; }
+  }
+  @keyframes confettiFall {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity:1; }
+    100% { transform: translateY(160px) rotate(720deg); opacity:0; }
+  }
+  .mp-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.88);
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(8px);
+  }
+  .mp-modal {
+    position: relative;
+    width: 480px;
+    min-height: 460px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 40px 24px 32px;
+  }
+  .mp-close {
+    position: absolute; top: -36px; right: 0;
+    background: none; border: none; color: rgba(255,255,255,0.5);
+    font-size: 26px; cursor: pointer; line-height:1;
+    transition: color 0.2s;
+  }
+  .mp-close:hover { color: #fff; }
+  .mp-pack-visual {
+    width: 200px; height: 300px;
+    border-radius: 18px;
+    background: linear-gradient(160deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+    border: 2px solid rgba(124,58,237,0.5);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .mp-pack-visual:hover { transform: scale(1.03); }
+  .mp-pack-shine {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+    pointer-events: none;
+  }
+  .mp-tear-line {
+    position: absolute; top: 50%; left: 0; right: 0; height: 2px;
+    background: repeating-linear-gradient(90deg, rgba(255,255,255,0.35) 0px, rgba(255,255,255,0.35) 6px, transparent 6px, transparent 12px);
+  }
+  .mp-pack-top {
+    position: absolute; top: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(160deg, #1e1b4b, #312e81);
+    border-radius: 18px 18px 0 0;
+    display: flex; align-items: center; justify-content: center;
+    transform-origin: top center;
+  }
+  .mp-pack-bottom {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(160deg, #312e81, #4c1d95);
+    border-radius: 0 0 18px 18px;
+    transform-origin: bottom center;
+  }
+  .mp-tearing .mp-pack-top { animation: tearTop 0.5s ease-in forwards; }
+  .mp-tearing .mp-pack-bottom { animation: tearBottom 0.5s ease-in forwards; }
+  .mp-fan-area {
+    position: relative;
+    width: 400px; height: 280px;
+    display: flex; align-items: flex-end; justify-content: center;
+  }
+  .mp-fan-card {
+    position: absolute;
+    width: 130px; height: 200px;
+    border-radius: 12px;
+    cursor: pointer;
+    overflow: hidden;
+    border: 2px solid rgba(255,255,255,0.12);
+    background: #1a1a2e;
+    animation: cardFanIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    animation-delay: var(--delay);
+    opacity: 0;
+    transition: border-color 0.2s;
+  }
+  .mp-fan-card:hover {
+    border-color: rgba(255,255,255,0.5);
+    z-index: 10 !important;
+  }
+  .mp-fan-card-back {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #1e1b4b, #312e81);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px;
+    position: relative;
+  }
+  .mp-fan-card-back::after {
+    content: '';
+    position: absolute; inset: 8px;
+    border: 1px solid rgba(124,58,237,0.35);
+    border-radius: 8px;
+  }
+  .mp-win-card {
+    width: 220px; height: 320px;
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    animation: winReveal 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    border: 2px solid;
+  }
+  .mp-win-img { width: 100%; height: 100%; object-fit: cover; }
+  .mp-win-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 16px 14px 14px;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%);
+    text-align: center;
+  }
+  .mp-confetti {
+    position: absolute;
+    width: 8px; height: 8px; border-radius: 2px;
+    animation: confettiFall 1.4s ease-in forwards;
+    pointer-events: none;
+  }
+  .mp-label { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #a78bfa; margin-bottom: 8px; }
+  .mp-hint { margin-top: 16px; font-size: 13px; color: rgba(255,255,255,0.45); text-align: center; }
+`
 
-  const handleClick = () => {
-    if (phase === 'idle') {
-      setPhase('shaking')
-      setTimeout(() => setPhase('opening'), 800)
-      setTimeout(() => {
-        const r = REWARDS[Math.floor(Math.random() * REWARDS.length)]
-        setReward(r)
-        setPhase('revealed')
-      }, 1600)
-    } else if (phase === 'revealed') {
-      setPhase('idle')
-      setReward(null)
-    }
+function MysteryPackModal({ onClose }) {
+  const [phase, setPhase] = useState('pack')
+  const [winner, setWinner] = useState(null)
+  const [confetti, setConfetti] = useState([])
+
+  const openPack = () => {
+    if (phase !== 'pack') return
+    setPhase('tearing')
+    setTimeout(() => setPhase('fan'), 600)
   }
 
-  const rarityColor = reward ? reward.color : '#7c3aed'
+  const pickCard = (card) => {
+    if (phase !== 'fan') return
+    setWinner(card)
+    setPhase('win')
+    setConfetti(Array.from({length: 20}, (_, i) => ({
+      id: i,
+      x: 40 + Math.random() * 360,
+      color: ['#f59e0b','#8b5cf6','#3b82f6','#10b981','#ef4444','#fff'][i % 6],
+      delay: Math.random() * 0.6,
+    })))
+  }
+
+  const fanAngles  = [-24, -12, 0, 12, 24]
+  const fanOffsets = [
+    { x: -140, y: 20 },
+    { x: -70,  y: -10 },
+    { x: 0,    y: -20 },
+    { x: 70,   y: -10 },
+    { x: 140,  y: 20 },
+  ]
 
   return (
-    <div
-      onClick={handleClick}
-      style={{
-        flex: '0 0 220px',
-        scrollSnapAlign: 'start',
-        cursor: 'pointer',
-        userSelect: 'none',
-      }}
-    >
-      <style>{`
-        @keyframes packShake {
-          0%,100% { transform: rotate(0deg) scale(1); }
-          15% { transform: rotate(-6deg) scale(1.05); }
-          30% { transform: rotate(6deg) scale(1.05); }
-          45% { transform: rotate(-4deg) scale(1.08); }
-          60% { transform: rotate(4deg) scale(1.08); }
-          75% { transform: rotate(-2deg) scale(1.06); }
-          90% { transform: rotate(2deg) scale(1.06); }
-        }
-        @keyframes packOpen {
-          0% { transform: scale(1) rotateY(0deg); opacity: 1; }
-          40% { transform: scale(1.15) rotateY(40deg); opacity: 0.7; }
-          100% { transform: scale(0) rotateY(90deg); opacity: 0; }
-        }
-        @keyframes cardReveal {
-          0% { transform: scale(0.3) rotateY(-90deg); opacity: 0; }
-          60% { transform: scale(1.1) rotateY(10deg); opacity: 1; }
-          80% { transform: scale(0.95) rotateY(-5deg); }
-          100% { transform: scale(1) rotateY(0deg); opacity: 1; }
-        }
-        @keyframes shimmer {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
-        @keyframes floatParticle {
-          0% { transform: translateY(0) scale(1); opacity: 1; }
-          100% { transform: translateY(-60px) scale(0); opacity: 0; }
-        }
-        .mystery-pack-wrap {
-          width: 220px;
-          height: 290px;
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .mystery-pack-body {
-          width: 160px;
-          height: 240px;
-          border-radius: 16px;
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          background: linear-gradient(145deg, #1e1b4b, #312e81, #4c1d95);
-          border: 2px solid #7c3aed;
-          box-shadow: 0 0 30px rgba(124,58,237,0.5), 0 0 60px rgba(124,58,237,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
-          transition: box-shadow 0.3s;
-          overflow: hidden;
-        }
-        .mystery-pack-body::before {
-          content: '';
-          position: absolute;
-          top: 0; left: 0; right: 0; bottom: 0;
-          background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
-          background-size: 200% 200%;
-          animation: shimmer 3s linear infinite;
-          border-radius: 14px;
-        }
-        .mystery-pack-body.shaking {
-          animation: packShake 0.8s ease-in-out;
-        }
-        .mystery-pack-body.opening {
-          animation: packOpen 0.8s ease-in forwards;
-        }
-        .pack-icon {
-          font-size: 52px;
-          margin-bottom: 8px;
-          filter: drop-shadow(0 0 12px rgba(124,58,237,0.8));
-        }
-        .pack-label {
-          font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: #a78bfa;
-          margin-bottom: 4px;
-        }
-        .pack-title {
-          font-size: 16px;
-          font-weight: 800;
-          color: #fff;
-          text-align: center;
-          padding: 0 12px;
-        }
-        .pack-tap-hint {
-          font-size: 11px;
-          color: #7c3aed;
-          margin-top: 12px;
-          animation: pulse 2s ease-in-out infinite;
-        }
-        .pack-glow-ring {
-          position: absolute;
-          width: 180px; height: 180px;
-          border-radius: 50%;
-          border: 1px solid rgba(124,58,237,0.3);
-          animation: pulse 2s ease-in-out infinite;
-          pointer-events: none;
-        }
-        .revealed-card {
-          width: 160px;
-          height: 240px;
-          border-radius: 16px;
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: flex-end;
-          overflow: hidden;
-          animation: cardReveal 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards;
-          border: 2px solid;
-          box-shadow: 0 0 30px rgba(0,0,0,0.5);
-        }
-        .revealed-card-img {
-          position: absolute;
-          inset: 0;
-          width: 100%; height: 100%;
-          object-fit: cover;
-        }
-        .revealed-card-overlay {
-          position: relative;
-          z-index: 2;
-          width: 100%;
-          padding: 12px;
-          background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
-          text-align: center;
-        }
-        .revealed-rarity {
-          font-size: 10px;
-          font-weight: 800;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          margin-bottom: 4px;
-        }
-        .revealed-name {
-          font-size: 14px;
-          font-weight: 700;
-          color: #fff;
-        }
-        .revealed-type {
-          font-size: 11px;
-          color: rgba(255,255,255,0.6);
-          margin-top: 2px;
-        }
-        .particle {
-          position: absolute;
-          width: 6px; height: 6px;
-          border-radius: 50%;
-          animation: floatParticle 1s ease-out forwards;
-          pointer-events: none;
-        }
-      `}</style>
+    <div className="mp-overlay" onClick={e => e.target.classList.contains('mp-overlay') && onClose()}>
+      <style>{PACK_CSS}</style>
+      <div className="mp-modal">
+        <button className="mp-close" onClick={onClose}>✕</button>
 
-      <div className="mystery-pack-wrap">
-        {/* Particles on reveal */}
-        {phase === 'revealed' && reward && [0,1,2,3,4,5].map(i => (
-          <div key={i} className="particle" style={{
-            background: rarityColor,
-            left: `${20 + i * 30}px`,
-            top: `${40 + (i % 3) * 20}px`,
-            animationDelay: `${i * 0.1}s`,
-          }} />
-        ))}
-
-        {phase !== 'revealed' ? (
-          <div className={`mystery-pack-body ${phase}`}>
-            <div className="pack-glow-ring" />
-            <div className="pack-icon">🎴</div>
-            <div className="pack-label">Mystery</div>
-            <div className="pack-title">NFT Pack</div>
-            <div className="pack-tap-hint">
-              {phase === 'idle' ? '✦ Tap to open' : phase === 'shaking' ? '✦ Shaking...' : '✦ Opening...'}
+        {phase === 'pack' && (
+          <>
+            <div className="mp-label">Mystery Pack</div>
+            <div style={{fontSize:22, fontWeight:800, color:'#fff', marginBottom:24}}>NFT Pack</div>
+            <div className={`mp-pack-visual`} onClick={openPack}>
+              <div className="mp-pack-shine" />
+              <div className="mp-tear-line" />
+              <div style={{fontSize:52, marginBottom:8}}>🎴</div>
+              <div style={{fontSize:11, color:'#a78bfa', fontWeight:700, letterSpacing:2}}>MYSTERY</div>
+              <div style={{fontSize:18, color:'#fff', fontWeight:800}}>NFT PACK</div>
             </div>
-          </div>
-        ) : (
-          <div className="revealed-card" style={{ borderColor: rarityColor, boxShadow: `0 0 30px ${rarityColor}66` }}>
-            {reward.img ? (
-              <img src={reward.img} alt={reward.name} className="revealed-card-img" />
-            ) : (
-              <div style={{
-                position: 'absolute', inset: 0,
-                background: `linear-gradient(135deg, ${rarityColor}33, ${rarityColor}11)`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 48,
-              }}>
-                {reward.type === 'Token' ? '🪙' : '🎴'}
+            <div className="mp-hint">Tap the pack to open</div>
+          </>
+        )}
+
+        {phase === 'tearing' && (
+          <>
+            <div className="mp-label">Opening...</div>
+            <div style={{width:200, height:300, position:'relative'}}>
+              <div className={`mp-pack-visual mp-tearing`} style={{cursor:'default'}}>
+                <div className="mp-pack-top"><div style={{fontSize:52}}>🎴</div></div>
+                <div className="mp-pack-bottom" />
+                <div className="mp-tear-line" />
               </div>
-            )}
-            <div className="revealed-card-overlay">
-              <div className="revealed-rarity" style={{ color: rarityColor }}>{reward.rarity}</div>
-              <div className="revealed-name">{reward.name}</div>
-              <div className="revealed-type">{reward.type} · Tap to reset</div>
             </div>
-          </div>
+          </>
+        )}
+
+        {phase === 'fan' && (
+          <>
+            <div className="mp-label">Pick a Card</div>
+            <div style={{fontSize:15, color:'rgba(255,255,255,0.6)', marginBottom:24}}>Choose one to reveal your prize</div>
+            <div className="mp-fan-area">
+              {PACK_CARDS.map((card, i) => (
+                <div
+                  key={card.id}
+                  className="mp-fan-card"
+                  onClick={() => pickCard(card)}
+                  style={{
+                    '--tx': `${fanOffsets[i].x}px`,
+                    '--ty': `${fanOffsets[i].y}px`,
+                    '--r': `${fanAngles[i]}deg`,
+                    '--delay': `${i * 0.08}s`,
+                    transform: `translateX(${fanOffsets[i].x}px) translateY(${fanOffsets[i].y}px) rotate(${fanAngles[i]}deg)`,
+                    bottom: 0,
+                    zIndex: 5 - Math.abs(i - 2),
+                  }}
+                >
+                  <div className="mp-fan-card-back">🎴</div>
+                </div>
+              ))}
+            </div>
+            <div className="mp-hint">Tap any card to reveal</div>
+          </>
+        )}
+
+        {phase === 'win' && winner && (
+          <>
+            {confetti.map(c => (
+              <div key={c.id} className="mp-confetti" style={{background:c.color, left:c.x, top:0, animationDelay:`${c.delay}s`}} />
+            ))}
+            <div className="mp-label" style={{color: winner.color}}>✦ {winner.rarity} ✦</div>
+            <div style={{height:12}} />
+            <div className="mp-win-card" style={{borderColor: winner.color}}>
+              {winner.img
+                ? <img src={winner.img} alt={winner.name} className="mp-win-img" />
+                : <div style={{width:'100%',height:'100%',background:`linear-gradient(135deg,${winner.color}22,#1a1a2e)`,display:'flex',alignItems:'center',justifyContent:'center',fontSize:64}}>🪙</div>
+              }
+              <div className="mp-win-overlay">
+                <div style={{fontSize:11,fontWeight:800,letterSpacing:2,color:winner.color,textTransform:'uppercase',marginBottom:4}}>{winner.rarity}</div>
+                <div style={{fontSize:18,fontWeight:800,color:'#fff'}}>{winner.name}</div>
+                <div style={{fontSize:12,color:'rgba(255,255,255,0.5)',marginTop:4}}>{winner.type}</div>
+              </div>
+            </div>
+            <div className="mp-hint" style={{cursor:'pointer'}} onClick={onClose}>Tap anywhere to close</div>
+          </>
         )}
       </div>
-
-      {/* Label bawah */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 2px 0', fontSize: 13, fontWeight: 600 }}>
-        <span style={{ display: 'flex', alignItems: 'center', gap: 5, color: '#7c3aed', fontSize: 13, fontWeight: 700 }}>
-          <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#7c3aed', display: 'inline-block', boxShadow: '0 0 6px #7c3aed' }}></span>
-          SPECIAL
-        </span>
-        <span style={{ color: 'var(--muted)', fontSize: 12 }}>Mystery Pack</span>
-      </div>
     </div>
+  )
+}
+
+function MysteryPackCard() {
+  const [open, setOpen] = useState(false)
+  return (
+    <>
+      {open && <MysteryPackModal onClose={() => setOpen(false)} />}
+      <div
+        onClick={() => setOpen(true)}
+        style={{ flex:'0 0 200px', scrollSnapAlign:'start', cursor:'pointer', userSelect:'none' }}
+      >
+        <div style={{
+          width:200, height:290, borderRadius:16,
+          background:'linear-gradient(160deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%)',
+          border:'2px solid rgba(124,58,237,0.5)',
+          display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
+          position:'relative', overflow:'hidden', transition:'transform 0.2s',
+        }}
+          onMouseEnter={e => e.currentTarget.style.transform='scale(1.03)'}
+          onMouseLeave={e => e.currentTarget.style.transform='scale(1)'}
+        >
+          <div style={{position:'absolute',inset:0,background:'linear-gradient(135deg,transparent 30%,rgba(255,255,255,0.08) 50%,transparent 70%)',pointerEvents:'none'}} />
+          <div style={{position:'absolute',top:'50%',left:0,right:0,height:2,background:'repeating-linear-gradient(90deg,rgba(255,255,255,0.3) 0px,rgba(255,255,255,0.3) 6px,transparent 6px,transparent 12px)'}} />
+          <div style={{fontSize:52, marginBottom:8}}>🎴</div>
+          <div style={{fontSize:11, color:'#a78bfa', fontWeight:700, letterSpacing:2, textTransform:'uppercase'}}>Mystery</div>
+          <div style={{fontSize:18, color:'#fff', fontWeight:800}}>NFT Pack</div>
+          <div style={{fontSize:11, color:'rgba(124,58,237,0.8)', marginTop:14, letterSpacing:1}}>✦ Tap to open</div>
+        </div>
+        <div style={{display:'flex',alignItems:'center',gap:8,padding:'8px 2px 0',fontSize:13,fontWeight:600}}>
+          <span style={{display:'flex',alignItems:'center',gap:5,color:'#7c3aed',fontSize:13,fontWeight:700}}>
+            <span style={{width:7,height:7,borderRadius:'50%',background:'#7c3aed',display:'inline-block'}}></span>
+            SPECIAL
+          </span>
+          <span style={{color:'var(--muted)',fontSize:12}}>Mystery Pack</span>
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -280,25 +335,6 @@ const COINS_BY_CHAIN = {
     { symbol: '$MKR', name: 'Maker', img: 'https://picsum.photos/seed/mkr/80/80', val: '$2.9M', rawVal: 2900000, change: '+1.9%', up: true },
   ],
 }
-
-const SAMPLE_RAFFLES = [
-  { id: 1, name: 'Mega Prize Raffle', entries: 1234, maxEntries: 2000, prize: '10 ETH', token: '$METH', ticketPrice: '50 $METH', img: 'https://picsum.photos/seed/raffle1/400/400', endsIn: '2d 14h 30m' },
-  { id: 2, name: 'NFT Collection Drop', entries: 567, maxEntries: 1000, prize: '5 NFTs', token: '$REBEL', ticketPrice: '20 $REBEL', img: 'https://picsum.photos/seed/raffle2/400/400', endsIn: '1d 6h 15m' },
-  { id: 3, name: 'Token Airdrop', entries: 2891, maxEntries: 5000, prize: '1000 TOKENS', token: '$TURBO', ticketPrice: '10 $TURBO', img: 'https://picsum.photos/seed/raffle3/400/400', endsIn: '3d 2h 45m' },
-  { id: 4, name: 'Golden Ticket', entries: 345, maxEntries: 500, prize: 'VIP Pass', token: '$METH', ticketPrice: '100 $METH', img: 'https://picsum.photos/seed/raffle4/400/400', endsIn: '12h 30m' },
-  { id: 5, name: 'Whale Raffle', entries: 890, maxEntries: 1500, prize: '50 ETH', token: '$ETH', ticketPrice: '0.1 ETH', img: 'https://picsum.photos/seed/raffle5/400/400', endsIn: '5d 8h' },
-]
-
-const SAMPLE_COLLECTIONS = [
-  { id: 1, name: 'MegaRebel', staked: 234, desc: 'The original MegaETH rebel collection. Stake to earn daily rewards.', img: 'https://picsum.photos/seed/coll1/400/400', badge: 'new' },
-  { id: 2, name: 'Cosmic Apes', staked: 567, desc: 'Cosmic apes from the Cosmos ecosystem. High APY staking rewards.', img: 'https://picsum.photos/seed/coll2/400/400', badge: null },
-  { id: 3, name: 'Digital Dreams', staked: 123, desc: 'Dreamy digital art collection with unique staking mechanics.', img: 'https://picsum.photos/seed/coll3/400/400', badge: 'new' },
-  { id: 4, name: 'Pixel Paradise', staked: 456, desc: 'Pixel art NFTs with charity donation features.', img: 'https://picsum.photos/seed/coll4/400/400', badge: 'charity' },
-  { id: 5, name: 'Neon Nights', staked: 789, desc: 'Neon-themed collection with the highest staking rewards.', img: 'https://picsum.photos/seed/coll5/400/400', badge: null },
-  { id: 6, name: 'Retro Vibes', staked: 234, desc: 'Retro-style NFTs celebrating the early days of crypto.', img: 'https://picsum.photos/seed/coll6/400/400', badge: null },
-  { id: 7, name: 'CryptoKitties', staked: 1024, desc: 'Classic crypto collectibles reimagined for the modern era.', img: 'https://picsum.photos/seed/coll7/400/400', badge: null },
-  { id: 8, name: 'Space Rebels', staked: 312, desc: 'Space-themed rebels fighting for decentralization.', img: 'https://picsum.photos/seed/coll8/400/400', badge: 'new' },
-]
 
 const EXPLORE_TABS = ['All', 'Cosmos', 'MegaETH', 'Ethereum']
 
