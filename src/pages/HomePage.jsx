@@ -141,30 +141,40 @@ export default function HomePage() {
         <div className="trending-track" id="trendingTrack" ref={trendingRef}>
           {filteredRaffles.map(r => {
             const entries = r.currentEntries ?? r.entries ?? 0
-            const maxEntries = r.maxEntries ?? 2000
-            const pct = Math.round((entries / maxEntries) * 100)
             const endsIn = r.endsIn || '2d 14h 30m'
             const name = r.name || r.title || 'Raffle'
             const token = r.token || r.symbol || '$METH'
+            const prize = r.prize || r.prizeValue || '—'
             const img = r.img || r.image || `https://picsum.photos/seed/raffle${r.id}/400/400`
             return (
-              <div
-                key={r.id}
-                className="trending-card"
-                onClick={() => alert(`Open raffle: ${name}`)}
-              >
+              <div key={r.id} className="trending-card">
+                {/* Square image with overlays */}
                 <div className="trending-img">
                   <img src={img} alt={name} />
+
+                  {/* Bottom gradient overlay — always visible */}
                   <div className="trending-overlay">
                     <div className="trending-mcap">{entries.toLocaleString()}</div>
                     <div className="trending-label">{name}</div>
                     <div className="trending-ticker">{token}</div>
                   </div>
-                  <div className="raffle-hover-btn"><span>Enter Raffle</span></div>
+
+                  {/* Hover overlay — "Enter Raffle" button */}
+                  <div className="raffle-hover-btn">
+                    <span>Enter Raffle</span>
+                  </div>
                 </div>
-                <div className="trending-bottom">
-                  <div className="trending-live-dot"></div>
-                  End in {endsIn}
+
+                {/* Below image: title + subtitle */}
+                <div style={{ padding: '10px 4px 4px' }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--t1)', marginBottom: 3 }}>{name}</div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span style={{ fontSize: 12, color: 'var(--t3)', fontWeight: 600 }}>{token} · Prize: {prize}</span>
+                    <span style={{ fontSize: 12, color: 'var(--green)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
+                      <span className="trending-live-dot" style={{ width: 6, height: 6 }}></span>
+                      {endsIn}
+                    </span>
+                  </div>
                 </div>
               </div>
             )
@@ -200,31 +210,50 @@ export default function HomePage() {
             const name = coll.name || 'Collection'
             const staked = coll.staked ?? coll.stakers ?? coll.stakedCount ?? 0
             const desc = coll.desc || coll.description || 'Stake NFTs to earn daily rewards.'
+            const rewardRate = coll.rewardRate || coll.reward_rate || null
+            const floorPrice = coll.floorPrice || coll.floor_price || null
             const img = coll.img || coll.image || `https://picsum.photos/seed/coll${coll.id}/400/400`
             const badge = coll.badge || null
             return (
-              <div
-                key={coll.id}
-                className="trending-card"
-                onClick={() => alert(`Open collection: ${name}`)}
-              >
+              <div key={coll.id} className="trending-card">
+                {/* Square image with overlays */}
                 <div className="trending-img">
                   <img src={img} alt={name} />
+
+                  {/* Badge */}
                   {badge && (
                     <div className={`coll-badge ${badge}`} style={{ zIndex: 4 }}>
                       {badge.charAt(0).toUpperCase() + badge.slice(1)}
                     </div>
                   )}
+
+                  {/* Bottom gradient overlay — always visible */}
                   <div className="trending-overlay">
                     <div className="trending-mcap">{staked.toLocaleString()} staked</div>
                     <div className="trending-label">{name}</div>
                     <div className="trending-ticker">NFT Collection</div>
                   </div>
-                  <div className="raffle-hover-btn"><span>Stake NFT</span></div>
+
+                  {/* Hover overlay — "Stake NFT" button */}
+                  <div className="raffle-hover-btn">
+                    <span>Stake NFT</span>
+                  </div>
                 </div>
-                <div className="trending-bottom">
-                  <div className="trending-live-dot"></div>
-                  {desc.length > 40 ? desc.slice(0, 40) + '…' : desc}
+
+                {/* Below image: title + subtitle */}
+                <div style={{ padding: '10px 4px 4px' }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--t1)', marginBottom: 3 }}>{name}</div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span style={{ fontSize: 12, color: 'var(--t3)', fontWeight: 600 }}>
+                      {staked.toLocaleString()} stakers
+                      {floorPrice ? ` · ${floorPrice}` : ''}
+                    </span>
+                    {rewardRate && (
+                      <span style={{ fontSize: 12, color: 'var(--green)', fontWeight: 700 }}>
+                        +{rewardRate} pts/day
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             )
