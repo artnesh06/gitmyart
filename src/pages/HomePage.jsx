@@ -31,11 +31,11 @@ const COINS_BY_CHAIN = {
 }
 
 const SAMPLE_RAFFLES = [
-  { id: 1, name: 'Mega Prize Raffle', entries: 1234, maxEntries: 2000, prize: '10 ETH', token: '$METH', img: 'https://picsum.photos/seed/raffle1/400/400', endsIn: '2d 14h 30m' },
-  { id: 2, name: 'NFT Collection Drop', entries: 567, maxEntries: 1000, prize: '5 NFTs', token: '$REBEL', img: 'https://picsum.photos/seed/raffle2/400/400', endsIn: '1d 6h 15m' },
-  { id: 3, name: 'Token Airdrop', entries: 2891, maxEntries: 5000, prize: '1000 TOKENS', token: '$TURBO', img: 'https://picsum.photos/seed/raffle3/400/400', endsIn: '3d 2h 45m' },
-  { id: 4, name: 'Golden Ticket', entries: 345, maxEntries: 500, prize: 'VIP Pass', token: '$METH', img: 'https://picsum.photos/seed/raffle4/400/400', endsIn: '12h 30m' },
-  { id: 5, name: 'Whale Raffle', entries: 890, maxEntries: 1500, prize: '50 ETH', token: '$ETH', img: 'https://picsum.photos/seed/raffle5/400/400', endsIn: '5d 8h' },
+  { id: 1, name: 'Mega Prize Raffle', entries: 1234, maxEntries: 2000, prize: '10 ETH', token: '$METH', ticketPrice: '50 $METH', img: 'https://picsum.photos/seed/raffle1/400/400', endsIn: '2d 14h 30m' },
+  { id: 2, name: 'NFT Collection Drop', entries: 567, maxEntries: 1000, prize: '5 NFTs', token: '$REBEL', ticketPrice: '20 $REBEL', img: 'https://picsum.photos/seed/raffle2/400/400', endsIn: '1d 6h 15m' },
+  { id: 3, name: 'Token Airdrop', entries: 2891, maxEntries: 5000, prize: '1000 TOKENS', token: '$TURBO', ticketPrice: '10 $TURBO', img: 'https://picsum.photos/seed/raffle3/400/400', endsIn: '3d 2h 45m' },
+  { id: 4, name: 'Golden Ticket', entries: 345, maxEntries: 500, prize: 'VIP Pass', token: '$METH', ticketPrice: '100 $METH', img: 'https://picsum.photos/seed/raffle4/400/400', endsIn: '12h 30m' },
+  { id: 5, name: 'Whale Raffle', entries: 890, maxEntries: 1500, prize: '50 ETH', token: '$ETH', ticketPrice: '0.1 ETH', img: 'https://picsum.photos/seed/raffle5/400/400', endsIn: '5d 8h' },
 ]
 
 const SAMPLE_COLLECTIONS = [
@@ -141,37 +141,54 @@ export default function HomePage() {
         <div className="trending-track" id="trendingTrack" ref={trendingRef}>
           {filteredRaffles.map(r => {
             const entries = r.currentEntries ?? r.entries ?? 0
+            const maxEntries = r.maxEntries ?? 2000
             const endsIn = r.endsIn || '2d 14h 30m'
             const name = r.name || r.title || 'Raffle'
             const token = r.token || r.symbol || '$METH'
             const prize = r.prize || r.prizeValue || '—'
+            const ticketPrice = r.ticketPrice || r.price ? `${r.price} ${token}` : '—'
             const img = r.img || r.image || `https://picsum.photos/seed/raffle${r.id}/400/400`
             return (
               <div key={r.id} className="coll-card" style={{ flex: '0 0 290px', scrollSnapAlign: 'start' }}>
+                {/* Card image area */}
                 <div className="coll-card-img" style={{ width: 290, height: 290 }}>
                   <img src={img} alt={name} />
 
-                  {/* Live badge */}
-                  <div className="coll-card-activity">
-                    <span className="live-dot"></span> LIVE
-                  </div>
-
-                  {/* Default overlay: nama di atas, entries di bawah */}
+                  {/* Default overlay: nama atas, entries bawah */}
                   <div className="coll-card-name-overlay" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 2 }}>
                     <span className="coll-card-name">{name}</span>
                     <span className="coll-card-staked">{Number(entries).toLocaleString()} entries</span>
                   </div>
 
-                  {/* Hover overlay: nama + prize + timer + button */}
+                  {/* Hover overlay */}
                   <div className="coll-card-overlay">
                     <div className="coll-overlay-name">{name}</div>
                     <div className="coll-overlay-desc">
-                      Prize: {prize}<br />
-                      Token: {token}<br />
-                      <span style={{ color: 'var(--green)', fontWeight: 600 }}>⏱ {endsIn}</span>
+                      🎁 Prize: <b>{prize}</b><br />
+                      🎟 1 ticket: <b>{r.ticketPrice || '—'}</b><br />
+                      👥 Sold: <b>{Number(entries).toLocaleString()} / {Number(maxEntries).toLocaleString()}</b>
                     </div>
                     <button className="coll-overlay-btn buy">Enter Raffle</button>
                   </div>
+                </div>
+
+                {/* LIVE badge + countdown — di LUAR card, di bawah */}
+                <div style={{
+                  display: 'flex', alignItems: 'center', gap: 8,
+                  padding: '8px 4px 2px',
+                  fontSize: 13, fontWeight: 600,
+                }}>
+                  <span style={{
+                    display: 'flex', alignItems: 'center', gap: 5,
+                    background: 'rgba(74,222,128,.12)', color: 'var(--green)',
+                    padding: '3px 10px', borderRadius: 999, fontSize: 12, fontWeight: 700,
+                  }}>
+                    <span className="live-dot" style={{ width: 6, height: 6 }}></span>
+                    LIVE
+                  </span>
+                  <span style={{ color: 'var(--green)', fontSize: 13, fontWeight: 600 }}>
+                    {endsIn}
+                  </span>
                 </div>
               </div>
             )
