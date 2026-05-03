@@ -1907,3 +1907,22 @@ body,.sidebar,.topbar,button,input,select,textarea{font-family:var(--font-main);
 .lb2-ps-badge, .lb2-row-avatar, .rpanel-profile-avatar img {
   border-radius: 999px !important;
 }
+
+/* ===== FIX ZOOM CLIPPING — ticker dan dropdown tidak terpotong ===== */
+.ticker-section {
+  overflow: visible !important;
+}
+.ticker-track {
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+}
+/* Pastikan content area tidak clip elemen yang overflow ke atas */
+.content {
+  overflow-x: visible !important;
+}
+.main-content-area {
+  overflow: visible !important;
+}
+.main-wrapper {
+  overflow: visible !important;
+}

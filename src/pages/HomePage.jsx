@@ -290,49 +290,72 @@ function MysteryPackCard() {
         >
           <div style={{position:'absolute',inset:0,background:'linear-gradient(135deg,transparent 30%,rgba(255,255,255,0.08) 50%,transparent 70%)',pointerEvents:'none'}} />
           <div style={{position:'absolute',top:'50%',left:0,right:0,height:2,background:'repeating-linear-gradient(90deg,rgba(255,255,255,0.3) 0px,rgba(255,255,255,0.3) 6px,transparent 6px,transparent 12px)'}} />
-          <div style={{fontSize:52, marginBottom:8}}>🎴</div>
+          {/* No emoji — just text */}
           <div style={{fontSize:11, color:'#a78bfa', fontWeight:700, letterSpacing:2, textTransform:'uppercase'}}>Mystery</div>
-          <div style={{fontSize:18, color:'#fff', fontWeight:800}}>NFT Pack</div>
+          <div style={{fontSize:22, color:'#fff', fontWeight:800, marginTop:4}}>NFT Pack</div>
           <div style={{fontSize:11, color:'rgba(124,58,237,0.8)', marginTop:14, letterSpacing:1}}>✦ Tap to open</div>
         </div>
-        <div style={{display:'flex',alignItems:'center',gap:8,padding:'8px 2px 0',fontSize:13,fontWeight:600}}>
-          <span style={{display:'flex',alignItems:'center',gap:5,color:'#7c3aed',fontSize:13,fontWeight:700}}>
-            <span style={{width:7,height:7,borderRadius:'50%',background:'#7c3aed',display:'inline-block'}}></span>
-            SPECIAL
-          </span>
-          <span style={{color:'var(--muted)',fontSize:12}}>Mystery Pack</span>
+        {/* Label: SPECIAL PACK */}
+        <div style={{display:'flex',alignItems:'center',gap:6,padding:'8px 2px 0',fontSize:13,fontWeight:700}}>
+          <span style={{width:7,height:7,borderRadius:'50%',background:'#7c3aed',display:'inline-block',flexShrink:0}}></span>
+          <span style={{color:'#7c3aed',fontSize:13,fontWeight:700}}>SPECIAL</span>
+          <span style={{color:'var(--t1)',fontSize:13,fontWeight:700}}>PACK</span>
         </div>
       </div>
     </>
   )
 }
 
+// Real MegaRebel NFT images for coin avatars
+const MREB_IMGS = [
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/373f88cea82b8a480d2b2debebebb4/fc373f88cea82b8a480d2b2debebebb4.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/7cbfe0122c9009bf5488bc67c24ce8/817cbfe0122c9009bf5488bc67c24ce8.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/e92cfaf6b7d8374fccab2c59a43865/68e92cfaf6b7d8374fccab2c59a43865.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/9bd966398679eb141a0ab8f0775b4b/119bd966398679eb141a0ab8f0775b4b.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/038a27ca06b9325ef860eed85e38e7/0b038a27ca06b9325ef860eed85e38e7.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/c103c8a1ef82658fb71d040a023e0c/8dc103c8a1ef82658fb71d040a023e0c.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/cb5eb8c43acd3de45413ed0d2e0412/a6cb5eb8c43acd3de45413ed0d2e0412.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/60655a59f68eefb6422ff1f53095bd/9d60655a59f68eefb6422ff1f53095bd.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/f6db78d0a9ecc00cc1be65a8405b27/3cf6db78d0a9ecc00cc1be65a8405b27.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/90b547c7d50c7adfe0c8fa6e4152e9/4c90b547c7d50c7adfe0c8fa6e4152e9.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/f42a71ad0168e1d30031d4ddab4047/55f42a71ad0168e1d30031d4ddab4047.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/a2600c90eddc1391796c509b243e9f/1aa2600c90eddc1391796c509b243e9f.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/4f7f59de7657bbca51dc41052cacbb/914f7f59de7657bbca51dc41052cacbb.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/bbcf12e9ac90946819956b1150fec4/bebbcf12e9ac90946819956b1150fec4.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/5b983592faf1b63c46296bf09d348e/255b983592faf1b63c46296bf09d348e.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/3b2332eda13fda2f20f8cdc37287e3/723b2332eda13fda2f20f8cdc37287e3.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/63aa8e2918c1c8931fa0d0478a890c/4963aa8e2918c1c8931fa0d0478a890c.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/f4267505f6a49182b6b06eb3741498/49f4267505f6a49182b6b06eb3741498.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/fab8cdcba3cef71f3be8419c282f83/8efab8cdcba3cef71f3be8419c282f83.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/c12763fdf5129bc4d5823a9ca99c63/66c12763fdf5129bc4d5823a9ca99c63.png?w=500',
+]
+
 const COINS_BY_CHAIN = {
   atom: [
-    { symbol: '$ATOM', name: 'Cosmos', img: 'https://picsum.photos/seed/atom/80/80', val: '$1.5M', rawVal: 1500000, change: '+9.4%', up: true },
-    { symbol: '$OSMO', name: 'Osmosis', img: 'https://picsum.photos/seed/osmo/80/80', val: '$890K', rawVal: 890000, change: '+5.2%', up: true },
-    { symbol: '$JUNO', name: 'Juno', img: 'https://picsum.photos/seed/juno/80/80', val: '$234K', rawVal: 234000, change: '-2.1%', up: false },
-    { symbol: '$STARS', name: 'Stargaze', img: 'https://picsum.photos/seed/stars/80/80', val: '$156K', rawVal: 156000, change: '+18.3%', up: true },
-    { symbol: '$INJ', name: 'Injective', img: 'https://picsum.photos/seed/inj/80/80', val: '$3.2M', rawVal: 3200000, change: '+12.7%', up: true },
-    { symbol: '$TIA', name: 'Celestia', img: 'https://picsum.photos/seed/tia/80/80', val: '$2.8M', rawVal: 2800000, change: '+7.1%', up: true },
-    { symbol: '$KUJI', name: 'Kujira', img: 'https://picsum.photos/seed/kuji/80/80', val: '$78K', rawVal: 78000, change: '-4.5%', up: false },
-    { symbol: '$AKT', name: 'Akash', img: 'https://picsum.photos/seed/akt/80/80', val: '$1.1M', rawVal: 1100000, change: '+22.8%', up: true },
+    { symbol: '$ATOM', name: 'Cosmos', img: MREB_IMGS[0], val: '$1.5M', rawVal: 1500000, change: '+9.4%', up: true },
+    { symbol: '$OSMO', name: 'Osmosis', img: MREB_IMGS[1], val: '$890K', rawVal: 890000, change: '+5.2%', up: true },
+    { symbol: '$JUNO', name: 'Juno', img: MREB_IMGS[2], val: '$234K', rawVal: 234000, change: '-2.1%', up: false },
+    { symbol: '$STARS', name: 'Stargaze', img: MREB_IMGS[3], val: '$156K', rawVal: 156000, change: '+18.3%', up: true },
+    { symbol: '$INJ', name: 'Injective', img: MREB_IMGS[4], val: '$3.2M', rawVal: 3200000, change: '+12.7%', up: true },
+    { symbol: '$TIA', name: 'Celestia', img: MREB_IMGS[5], val: '$2.8M', rawVal: 2800000, change: '+7.1%', up: true },
+    { symbol: '$KUJI', name: 'Kujira', img: MREB_IMGS[6], val: '$78K', rawVal: 78000, change: '-4.5%', up: false },
+    { symbol: '$AKT', name: 'Akash', img: MREB_IMGS[7], val: '$1.1M', rawVal: 1100000, change: '+22.8%', up: true },
   ],
   megaeth: [
-    { symbol: '$METH', name: 'MegaETH', img: 'https://picsum.photos/seed/mega/80/80', val: '$4.8M', rawVal: 4800000, change: '+5.6%', up: true },
-    { symbol: '$REBEL', name: 'Rebel Token', img: 'https://picsum.photos/seed/rebel/80/80', val: '$2.1M', rawVal: 2100000, change: '+22.1%', up: true },
-    { symbol: '$TURBO', name: 'TurboSwap', img: 'https://picsum.photos/seed/turbo/80/80', val: '$890K', rawVal: 890000, change: '+34.5%', up: true },
-    { symbol: '$BLITZ', name: 'Blitz Finance', img: 'https://picsum.photos/seed/blitz/80/80', val: '$567K', rawVal: 567000, change: '+8.9%', up: true },
-    { symbol: '$FLASH', name: 'FlashLend', img: 'https://picsum.photos/seed/flash/80/80', val: '$345K', rawVal: 345000, change: '-5.2%', up: false },
-    { symbol: '$HYPER', name: 'HyperDEX', img: 'https://picsum.photos/seed/hyper/80/80', val: '$234K', rawVal: 234000, change: '+15.3%', up: true },
+    { symbol: '$METH', name: 'MegaETH', img: MREB_IMGS[8], val: '$4.8M', rawVal: 4800000, change: '+5.6%', up: true },
+    { symbol: '$REBEL', name: 'Rebel Token', img: MREB_IMGS[9], val: '$2.1M', rawVal: 2100000, change: '+22.1%', up: true },
+    { symbol: '$TURBO', name: 'TurboSwap', img: MREB_IMGS[10], val: '$890K', rawVal: 890000, change: '+34.5%', up: true },
+    { symbol: '$BLITZ', name: 'Blitz Finance', img: MREB_IMGS[11], val: '$567K', rawVal: 567000, change: '+8.9%', up: true },
+    { symbol: '$FLASH', name: 'FlashLend', img: MREB_IMGS[12], val: '$345K', rawVal: 345000, change: '-5.2%', up: false },
+    { symbol: '$HYPER', name: 'HyperDEX', img: MREB_IMGS[13], val: '$234K', rawVal: 234000, change: '+15.3%', up: true },
   ],
   ethereum: [
-    { symbol: '$ETH', name: 'Ethereum', img: 'https://picsum.photos/seed/eth/80/80', val: '$12.3M', rawVal: 12300000, change: '+2.4%', up: true },
-    { symbol: '$UNI', name: 'Uniswap', img: 'https://picsum.photos/seed/uni/80/80', val: '$8.9M', rawVal: 8900000, change: '+4.1%', up: true },
-    { symbol: '$AAVE', name: 'Aave', img: 'https://picsum.photos/seed/aave/80/80', val: '$5.6M', rawVal: 5600000, change: '+6.8%', up: true },
-    { symbol: '$LINK', name: 'Chainlink', img: 'https://picsum.photos/seed/link/80/80', val: '$4.2M', rawVal: 4200000, change: '-1.3%', up: false },
-    { symbol: '$LDO', name: 'Lido DAO', img: 'https://picsum.photos/seed/ldo/80/80', val: '$3.8M', rawVal: 3800000, change: '+3.5%', up: true },
-    { symbol: '$MKR', name: 'Maker', img: 'https://picsum.photos/seed/mkr/80/80', val: '$2.9M', rawVal: 2900000, change: '+1.9%', up: true },
+    { symbol: '$ETH', name: 'Ethereum', img: MREB_IMGS[14], val: '$12.3M', rawVal: 12300000, change: '+2.4%', up: true },
+    { symbol: '$UNI', name: 'Uniswap', img: MREB_IMGS[15], val: '$8.9M', rawVal: 8900000, change: '+4.1%', up: true },
+    { symbol: '$AAVE', name: 'Aave', img: MREB_IMGS[16], val: '$5.6M', rawVal: 5600000, change: '+6.8%', up: true },
+    { symbol: '$LINK', name: 'Chainlink', img: MREB_IMGS[17], val: '$4.2M', rawVal: 4200000, change: '-1.3%', up: false },
+    { symbol: '$LDO', name: 'Lido DAO', img: MREB_IMGS[18], val: '$3.8M', rawVal: 3800000, change: '+3.5%', up: true },
+    { symbol: '$MKR', name: 'Maker', img: MREB_IMGS[19], val: '$2.9M', rawVal: 2900000, change: '+1.9%', up: true },
   ],
 }
 
