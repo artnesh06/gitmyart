@@ -472,14 +472,22 @@ input,select,textarea{font-family:'Inter',sans-serif;}
   opacity:0;transition:opacity .25s;
 }
 .coll-card:hover .coll-card-overlay{opacity:1;}
-.coll-overlay-name{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;}
-.coll-overlay-desc{font-size:13px;color:rgba(255,255,255,.7);line-height:1.5;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.coll-overlay-name{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;opacity:0;transform:translateY(20px) scale(.95);transition:all .4s cubic-bezier(.34,1.56,.64,1);animation:slideUpTitle .4s cubic-bezier(.34,1.56,.64,1) forwards;}
+@keyframes slideUpTitle{from{opacity:0;transform:translateY(20px) scale(.95);}to{opacity:1;transform:translateY(0) scale(1);}}
+.coll-overlay-desc{font-size:13px;color:rgba(255,255,255,.7);line-height:1.5;margin-bottom:14px;display:flex;flex-direction:column;gap:8px;overflow:hidden;min-height:48px;}
+.raffle-hover-item{opacity:0;transform:translateY(20px);transition:all .3s cubic-bezier(.34,1.56,.64,1);animation:slideUpIn .3s cubic-bezier(.34,1.56,.64,1) forwards;}
+.raffle-hover-item:nth-child(1){animation-delay:.05s;}
+.raffle-hover-item:nth-child(2){animation-delay:.1s;}
+.raffle-hover-item:nth-child(3){animation-delay:.15s;}
+@keyframes slideUpIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 .coll-overlay-btn{
   width:100%;font-size:14px;font-weight:600;padding:11px;
   border-radius:var(--radius);border:none;
   background:var(--accent);color:#fff;cursor:pointer;
   transition:background .12s;
 }
+.overlay-slide-up-btn{opacity:0;transform:translateY(24px) scale(.92);animation:slideUpBtn .5s cubic-bezier(.34,1.56,.64,1) forwards;}
+@keyframes slideUpBtn{from{opacity:0;transform:translateY(24px) scale(.92);}to{opacity:1;transform:translateY(0) scale(1);}}
 .coll-overlay-btn:hover{background:var(--accent-d);}
 .coll-overlay-btn.stake{background:var(--accent);}
 .coll-overlay-btn.buy{background:var(--accent);}
@@ -688,9 +696,11 @@ input,select,textarea{font-family:'Inter',sans-serif;}
 .raffle-grid-card-body{padding:16px;}
 .raffle-grid-card-name{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:6px;}
 .raffle-grid-card-meta-row{display:flex;gap:10px;margin-bottom:10px;}
-.raffle-meta{flex:1;padding:8px;background:var(--bg-hover);border-radius:8px;text-align:center;}
-.raffle-meta-v{font-size:14px;font-weight:700;color:var(--t1);display:block;}
-.raffle-meta-l{font-size:12px;color:var(--t3);margin-top:2px;}
+.raffle-meta{flex:1;padding:8px;background:var(--bg-hover);border-radius:8px;text-align:center;position:relative;overflow:hidden;transition:all .2s ease;}
+.raffle-meta-v{font-size:14px;font-weight:700;color:var(--t1);display:block;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
+.raffle-meta-l{font-size:12px;color:var(--t3);margin-top:2px;position:absolute;bottom:-24px;left:0;right:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);}
+.raffle-grid-card:hover .raffle-meta-v{transform:translateY(-28px);}
+.raffle-grid-card:hover .raffle-meta-l{bottom:0;opacity:1;}
 .raffle-grid-card-footer{display:flex;align-items:center;justify-content:space-between;}
 .raffle-grid-card-time{font-size:13px;font-weight:600;color:var(--green);display:flex;align-items:center;}
 .raffle-grid-hover{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;border-radius:16px;z-index:2;}
@@ -1861,4 +1871,39 @@ body,.sidebar,.topbar,button,input,select,textarea{font-family:var(--font-main);
 .trending-track .coll-card:hover .coll-card-img {
   border-color: var(--border-l);
   box-shadow: var(--shadow);
+}
+
+/* ===== GLOBAL CORNER RADIUS — semua elemen ikut --radius ===== */
+.nav-item, .create-btn-sidebar,
+.notif-clear, .rpanel-chain-opt, .rpanel-profile-avatar,
+.rpanel-profile-stat, .rpanel-disconnect-btn,
+.topbar-search input, .back-btn,
+.ticker-item, .coins-list-item,
+.raffle-hover-btn, .raffle-hover-btn span,
+.tab-action-btn, .nft-card, .side-card,
+.lb2-cat-tab, .lb2-time-tab, .lb2-search-wrap,
+.lb2-row, .lb-item,
+.raffle-grid-card, .raffle-grid-card-img,
+.raffle-filter-btn, .raffle-coin-filter-btn,
+.coll-card, .coll-card-img,
+.lb2-chain-tab, .lb2-chain-tab.active,
+.settings-accordion,
+.notif-item,
+.mp-pack-visual, .mp-fan-card, .mp-win-card,
+.mp-pack-top, .mp-pack-bottom {
+  border-radius: var(--radius) !important;
+}
+
+/* Elemen yang butuh radius lebih kecil */
+.raffle-hover-btn span,
+.lb2-time-tab,
+.notif-clear {
+  border-radius: max(4px, calc(var(--radius) - 4px)) !important;
+}
+
+/* Elemen yang selalu pill/circle — jangan ikut radius */
+.coll-badge, .raffle-live-badge, .live-dot, .live-dot-sm,
+.trending-live-dot, .notif-dot, .ticker-avatar,
+.lb2-ps-badge, .lb2-row-avatar, .rpanel-profile-avatar img {
+  border-radius: 999px !important;
 }

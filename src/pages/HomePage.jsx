@@ -55,7 +55,7 @@ const PACK_CSS = `
   .mp-close:hover { color: #fff; }
   .mp-pack-visual {
     width: 200px; height: 300px;
-    border-radius: 18px;
+    border-radius: var(--radius, 16px);
     background: linear-gradient(160deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
     border: 2px solid rgba(124,58,237,0.5);
     display: flex; flex-direction: column;
@@ -77,14 +77,14 @@ const PACK_CSS = `
   .mp-pack-top {
     position: absolute; top: 0; left: 0; right: 0; height: 50%;
     background: linear-gradient(160deg, #1e1b4b, #312e81);
-    border-radius: 18px 18px 0 0;
+    border-radius: var(--radius, 16px) var(--radius, 16px) 0 0;
     display: flex; align-items: center; justify-content: center;
     transform-origin: top center;
   }
   .mp-pack-bottom {
     position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
     background: linear-gradient(160deg, #312e81, #4c1d95);
-    border-radius: 0 0 18px 18px;
+    border-radius: 0 0 var(--radius, 16px) var(--radius, 16px);
     transform-origin: bottom center;
   }
   .mp-tearing .mp-pack-top { animation: tearTop 0.5s ease-in forwards; }
@@ -97,7 +97,7 @@ const PACK_CSS = `
   .mp-fan-card {
     position: absolute;
     width: 130px; height: 200px;
-    border-radius: 12px;
+    border-radius: var(--radius, 12px);
     cursor: pointer;
     overflow: hidden;
     border: 2px solid rgba(255,255,255,0.12);
@@ -122,11 +122,11 @@ const PACK_CSS = `
     content: '';
     position: absolute; inset: 8px;
     border: 1px solid rgba(124,58,237,0.35);
-    border-radius: 8px;
+    border-radius: max(4px, calc(var(--radius, 12px) - 4px));
   }
   .mp-win-card {
     width: 220px; height: 320px;
-    border-radius: 18px;
+    border-radius: var(--radius, 16px);
     overflow: hidden;
     position: relative;
     animation: winReveal 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards;
@@ -279,7 +279,7 @@ function MysteryPackCard() {
         style={{ flex:'0 0 200px', scrollSnapAlign:'start', cursor:'pointer', userSelect:'none' }}
       >
         <div style={{
-          width:200, height:290, borderRadius:16,
+          width:200, height:290, borderRadius:'var(--radius)',
           background:'linear-gradient(160deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%)',
           border:'2px solid rgba(124,58,237,0.5)',
           display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
