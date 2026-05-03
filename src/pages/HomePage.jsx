@@ -59,18 +59,37 @@ export default function HomePage() {
   const trendingRef = useRef(null)
   const collectionRef = useRef(null)
 
-  const [raffles, setRaffles] = useState(SAMPLE_RAFFLES)
-  const [collections, setCollections] = useState(SAMPLE_COLLECTIONS)
+  const [raffles, setRaffles] = useState([])
+  const [collections, setCollections] = useState([])
 
-  // Try to fetch real data from API
+  // Helper: convert ISO date to countdown string
+  const toCountdown = (endsAt) => {
+    if (!endsAt) return '—'
+    const diff = new Date(endsAt) - new Date()
+    if (diff <= 0) return 'Ended'
+    const d = Math.floor(diff / 86400000)
+    const h = Math.floor((diff % 86400000) / 3600000)
+    const m = Math.floor((diff % 3600000) / 60000)
+    if (d > 0) return `${d}d ${h}h ${m}m`
+    if (h > 0) return `${h}h ${m}m`
+    return `${m}m`
+  }
+
+  // Fetch real data from API
   useEffect(() => {
     fetch('/api/raffles')
       .then(r => r.json())
-      .then(data => { if (data?.raffles?.length) setRaffles(data.raffles) })
+      .then(data => {
+        const arr = Array.isArray(data) ? data : (data?.raffles || data?.data || [])
+        if (arr.length) setRaffles(arr)
+      })
       .catch(() => {})
     fetch('/api/collections')
       .then(r => r.json())
-      .then(data => { if (data?.collections?.length) setCollections(data.collections) })
+      .then(data => {
+        const arr = Array.isArray(data) ? data : (data?.collections || data?.data || [])
+        if (arr.length) setCollections(arr)
+      })
       .catch(() => {})
   }, [])
 
@@ -142,12 +161,12 @@ export default function HomePage() {
           {filteredRaffles.map(r => {
             const entries = r.currentEntries ?? r.entries ?? 0
             const maxEntries = r.maxEntries ?? 2000
-            const endsIn = r.endsIn || '2d 14h 30m'
+            const endsIn = r.endsIn || toCountdown(r.endsAt)
             const name = r.name || r.title || 'Raffle'
             const token = r.token || r.symbol || '$METH'
             const prize = r.prize || r.prizeValue || '—'
             const ticketPrice = r.ticketPrice || r.price ? `${r.price} ${token}` : '—'
-            const img = r.img || r.image || `https://picsum.photos/seed/raffle${r.id}/400/400`
+            const img = r.imageUrl || r.img || r.image || `https://picsum.photos/seed/raffle${r.id}/400/400`
             return (
               <div key={r.id} className="coll-card" style={{ flex: '0 0 290px', scrollSnapAlign: 'start' }}>
                 {/* Card image area */}
@@ -162,13 +181,13 @@ export default function HomePage() {
 
                   {/* Hover overlay */}
                   <div className="coll-card-overlay">
-                    <div className="coll-overlay-name">{name}</div>
-                    <div className="coll-overlay-desc">
-                      🎁 Prize: <b>{prize}</b><br />
-                      🎟 1 ticket: <b>{r.ticketPrice || '—'}</b><br />
-                      👥 Sold: <b>{Number(entries).toLocaleString()} / {Number(maxEntries).toLocaleString()}</b>
+                    <div className="coll-overlay-name overlay-slide-up">{name}</div>
+                    <div className="coll-overlay-desc raffle-hover-content">
+                      <div className="raffle-hover-item">Prize: <b>{prize}</b></div>
+                      <div className="raffle-hover-item">1 ticket: <b>{r.ticketPrice || '—'}</b></div>
+                      <div className="raffle-hover-item">Sold: <b>{Number(entries).toLocaleString()} / {Number(maxEntries).toLocaleString()}</b></div>
                     </div>
-                    <button className="coll-overlay-btn buy">Enter Raffle</button>
+                    <button className="coll-overlay-btn buy overlay-slide-up-btn">Enter Raffle</button>
                   </div>
                 </div>
 
@@ -223,10 +242,10 @@ export default function HomePage() {
         <div className="trending-track" id="collectionTrack" ref={collectionRef}>
           {collections.map(coll => {
             const name = coll.name || 'Collection'
-            const staked = coll.staked ?? coll.stakers ?? coll.stakedCount ?? 0
+            const staked = coll.totalStaked ?? coll.staked ?? coll.stakers ?? coll.stakedCount ?? 0
             const desc = coll.desc || coll.description || 'Stake NFTs to earn daily rewards.'
-            const rewardRate = coll.rewardRate || coll.reward_rate || null
-            const img = coll.img || coll.image || `https://picsum.photos/seed/coll${coll.id}/400/400`
+            const rewardRate = coll.rewardPerDay || coll.rewardRate || coll.reward_rate || null
+            const img = coll.imageUrl || coll.img || coll.image || `https://picsum.photos/seed/coll${coll.id}/400/400`
             const badge = coll.badge || null
             return (
               <div key={coll.id} className="coll-card" style={{ flex: '0 0 290px', scrollSnapAlign: 'start' }}>
