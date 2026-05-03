@@ -1835,3 +1835,15 @@ body,.sidebar,.topbar,button,input,select,textarea{font-family:var(--font-main);
   width: 290px;
   height: 290px;
 }
+
+/* ===== CARD OVERLAY TEXT — bigger like ticker ===== */
+.trending-track .coll-card .coll-card-name-overlay .coll-card-name {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+}
+.trending-track .coll-card .coll-card-name-overlay .coll-card-staked {
+  font-size: 14px !important;
+  color: rgba(255,255,255,0.7) !important;
+  font-weight: 500 !important;
+}
