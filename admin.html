@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rebel.fun — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body data-page="login">
+
+<!-- LOGIN PAGE -->
+<div class="admin-login-wrap" id="loginWrap">
+  <div class="admin-login-box">
+    <div class="admin-login-logo">
+      <span class="admin-logo-text">Rebel.fun</span>
+      <span class="admin-logo-badge">Admin</span>
+    </div>
+    <h2 class="admin-login-title">Sign in to Admin Panel</h2>
+    <p class="admin-login-sub">Restricted access. Authorized personnel only.</p>
+    <form class="admin-login-form" onsubmit="adminLogin(event)">
+      <div class="admin-form-group">
+        <label class="admin-label">Username</label>
+        <input type="text" id="adminUser" class="admin-input" placeholder="admin" autocomplete="username">
+      </div>
+      <div class="admin-form-group">
+        <label class="admin-label">Password</label>
+        <input type="password" id="adminPass" class="admin-input" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <div class="admin-login-error" id="loginError"></div>
+      <button type="submit" class="admin-login-btn">Sign In</button>
+    </form>
+    <p class="admin-login-hint">Default: admin / rebel2024</p>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div class="admin-app" id="adminApp" style="display:none;">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-logo">
+      <span class="admin-logo-text">Rebel.fun</span>
+      <span class="admin-logo-badge">Admin</span>
+    </div>
+    <nav class="admin-nav">
+      <a class="admin-nav-item active" onclick="adminGoPage('dashboard',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a class="admin-nav-item" onclick="adminGoPage('analytics',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Analytics
+      </a>
+      <a class="admin-nav-item" onclick="adminGoPage('collections',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Collections
+      </a>
+      <a class="admin-nav-item" onclick="adminGoPage('raffles',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/></svg>
+        Raffles
+      </a>
+      <a class="admin-nav-item" onclick="adminGoPage('users',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Users
+      </a>
+      <a class="admin-nav-item" onclick="adminGoPage('financial',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Financial
+      </a>
+      <a class="admin-nav-item" onclick="adminGoPage('risk',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Risk
+      </a>
+      <a class="admin-nav-item" onclick="adminGoPage('config',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Config
+      </a>
+      <a class="admin-nav-item" onclick="adminGoPage('logs',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Audit Logs
+      </a>
+      <a class="admin-nav-item" onclick="adminGoPage('docs',this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        System Docs
+      </a>
+    </nav>
+    <div class="admin-sidebar-footer">
+      <div class="admin-user-info">
+        <div class="admin-user-avatar">A</div>
+        <div class="admin-user-details">
+          <span class="admin-user-name">Admin</span>
+          <span class="admin-user-role">Super Admin</span>
+        </div>
+      </div>
+      <button class="admin-logout-btn" onclick="adminLogout()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="admin-main">
+    <!-- TOPBAR -->
+    <header class="admin-topbar">
+      <div class="admin-topbar-title" id="adminPageTitle">Dashboard</div>
+      <div class="admin-topbar-right">
+        <span class="admin-live-badge">
+          <span class="admin-live-dot"></span> Live
+        </span>
+        <a href="/" class="admin-view-site-btn" target="_blank">View Site</a>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="admin-content">
+
+      <!-- DASHBOARD -->
+      <div class="admin-page active" id="apage-dashboard">
+        <div class="admin-stats-grid" id="adminStatsGrid"></div>
+        <div class="admin-two-col">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <span class="admin-card-title">Recent Collections</span>
+              <button class="admin-card-action" onclick="adminGoPage('collections',null)">View all</button>
+            </div>
+            <div id="adminRecentCollections"></div>
+          </div>
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <span class="admin-card-title">Active Raffles</span>
+              <button class="admin-card-action" onclick="adminGoPage('raffles',null)">View all</button>
+            </div>
+            <div id="adminActiveRaffles"></div>
+          </div>
+        </div>
+        <div class="admin-card" style="margin-top:20px;">
+          <div class="admin-card-header"><span class="admin-card-title">Recent Activity</span></div>
+          <div id="adminRecentActivity"></div>
+        </div>
+      </div>
+
+      <!-- COLLECTIONS -->
+      <div class="admin-page" id="apage-collections">
+        <div class="admin-page-actions">
+          <input type="text" class="admin-search" placeholder="Search collections..." oninput="filterAdminTable('collTable',this.value)">
+          <select class="admin-select" onchange="filterAdminTableByChain('collTable',this.value)">
+            <option value="">All Chains</option>
+            <option value="atom">Cosmos</option>
+            <option value="megaeth">MegaETH</option>
+            <option value="ethereum">Ethereum</option>
+          </select>
+        </div>
+        <div class="admin-card">
+          <table class="admin-table" id="collTable">
+            <thead><tr><th>Collection</th><th>Chain</th><th>Creator</th><th>Staked</th><th>Token</th><th>Rate</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="collTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- RAFFLES -->
+      <div class="admin-page" id="apage-raffles">
+        <div class="admin-page-actions">
+          <input type="text" class="admin-search" placeholder="Search raffles..." oninput="filterAdminTable('raffleTable',this.value)">
+          <select class="admin-select">
+            <option value="">All Status</option>
+            <option value="live">Live</option>
+            <option value="ended">Ended</option>
+          </select>
+        </div>
+        <div class="admin-card">
+          <table class="admin-table" id="raffleTable">
+            <thead><tr><th>Raffle</th><th>Chain</th><th>Creator</th><th>Entries</th><th>Price</th><th>Ends In</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="raffleTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- USERS -->
+      <div class="admin-page" id="apage-users">
+        <div class="admin-page-actions">
+          <input type="text" class="admin-search" placeholder="Search users..." oninput="filterAdminTable('userTable',this.value)">
+          <select class="admin-select">
+            <option value="">All Chains</option>
+            <option value="atom">Cosmos</option>
+            <option value="megaeth">MegaETH</option>
+            <option value="ethereum">Ethereum</option>
+          </select>
+        </div>
+        <div class="admin-card">
+          <table class="admin-table" id="userTable">
+            <thead><tr><th>Wallet</th><th>Chain</th><th>NFTs Staked</th><th>Points</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="userTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CONFIG -->
+      <div class="admin-page" id="apage-config">
+        <div class="admin-two-col">
+          <div class="admin-card">
+            <div class="admin-card-header"><span class="admin-card-title">Staking Config</span></div>
+            <div class="admin-config-form">
+              <div class="admin-config-row">
+                <label class="admin-config-label">Base Reward Rate (pts/hr)</label>
+                <input type="number" class="admin-input-sm" value="10" id="cfgBaseReward">
+              </div>
+              <div class="admin-config-row">
+                <label class="admin-config-label">HP Decay Rate (%/30min)</label>
+                <input type="number" class="admin-input-sm" value="2" id="cfgHpDecay">
+              </div>
+              <div class="admin-config-row">
+                <label class="admin-config-label">Max Stake Per Wallet</label>
+                <input type="number" class="admin-input-sm" value="50" id="cfgMaxStake">
+              </div>
+              <div class="admin-config-row">
+                <label class="admin-config-label">Cooldown Between Claims (min)</label>
+                <input type="number" class="admin-input-sm" value="60" id="cfgClaimCooldown">
+              </div>
+              <button class="admin-save-btn" onclick="saveConfig()">Save Staking Config</button>
+            </div>
+          </div>
+          <div class="admin-card">
+            <div class="admin-card-header"><span class="admin-card-title">Raffle Config</span></div>
+            <div class="admin-config-form">
+              <div class="admin-config-row">
+                <label class="admin-config-label">Min Ticket Price</label>
+                <input type="number" class="admin-input-sm" value="10" id="cfgMinTicket">
+              </div>
+              <div class="admin-config-row">
+                <label class="admin-config-label">Max Raffle Duration (hrs)</label>
+                <input type="number" class="admin-input-sm" value="168" id="cfgMaxDuration">
+              </div>
+              <div class="admin-config-row">
+                <label class="admin-config-label">Max Entries Per Wallet</label>
+                <input type="number" class="admin-input-sm" value="10" id="cfgMaxEntries">
+              </div>
+              <div class="admin-config-row">
+                <label class="admin-config-label">Platform Fee (%)</label>
+                <input type="number" class="admin-input-sm" value="2.5" step="0.5" id="cfgFee">
+              </div>
+              <button class="admin-save-btn" onclick="saveConfig()">Save Raffle Config</button>
+            </div>
+          </div>
+        </div>
+        <div class="admin-card" style="margin-top:20px;">
+          <div class="admin-card-header"><span class="admin-card-title">Danger Zone</span></div>
+          <div class="admin-danger-zone">
+            <div class="admin-danger-item">
+              <div>
+                <div class="admin-danger-title">Pause All Staking</div>
+                <div class="admin-danger-desc">Temporarily disable staking across all collections</div>
+              </div>
+              <button class="admin-danger-btn" onclick="adminAction('pause_staking')">Pause</button>
+            </div>
+            <div class="admin-danger-item">
+              <div>
+                <div class="admin-danger-title">End All Active Raffles</div>
+                <div class="admin-danger-desc">Force-end all running raffles and pick winners</div>
+              </div>
+              <button class="admin-danger-btn" onclick="adminAction('end_raffles')">End All</button>
+            </div>
+            <div class="admin-danger-item">
+              <div>
+                <div class="admin-danger-title">Reset Leaderboard</div>
+                <div class="admin-danger-desc">Clear all points and reset rankings</div>
+              </div>
+              <button class="admin-danger-btn danger" onclick="adminAction('reset_lb')">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOGS -->
+      <div class="admin-page" id="apage-logs">
+        <div class="admin-page-actions">
+          <input type="text" class="admin-search" placeholder="Search logs..." oninput="filterAdminTable('logTable',this.value)">
+          <select class="admin-select" onchange="filterAdminTableByType('logTable',this.value)">
+            <option value="">All Actions</option>
+            <option value="stake">Stake</option>
+            <option value="unstake">Unstake</option>
+            <option value="claim">Claim</option>
+            <option value="raffle">Raffle</option>
+          </select>
+        </div>
+        <div class="admin-card">
+          <table class="admin-table" id="logTable">
+            <thead><tr><th>Time</th><th>Wallet</th><th>Action</th><th>Details</th><th>Chain</th></tr></thead>
+            <tbody id="logTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ANALYTICS -->
+      <div class="admin-page" id="apage-analytics">
+        <div class="admin-charts-grid">
+          <div class="admin-card admin-chart-card">
+            <div class="admin-card-header"><span class="admin-card-title">Staking Activity (7 days)</span></div>
+            <div class="admin-chart-wrap"><canvas id="chartStaking"></canvas></div>
+          </div>
+          <div class="admin-card admin-chart-card">
+            <div class="admin-card-header"><span class="admin-card-title">Raffle Ticket Sales (7 days)</span></div>
+            <div class="admin-chart-wrap"><canvas id="chartRaffle"></canvas></div>
+          </div>
+          <div class="admin-card admin-chart-card">
+            <div class="admin-card-header"><span class="admin-card-title">Platform Revenue (fees)</span></div>
+            <div class="admin-chart-wrap"><canvas id="chartRevenue"></canvas></div>
+          </div>
+          <div class="admin-card admin-chart-card">
+            <div class="admin-card-header"><span class="admin-card-title">New Users per Day</span></div>
+            <div class="admin-chart-wrap"><canvas id="chartUsers"></canvas></div>
+          </div>
+          <div class="admin-card admin-chart-card admin-chart-small">
+            <div class="admin-card-header"><span class="admin-card-title">Chain Distribution</span></div>
+            <div class="admin-chart-wrap"><canvas id="chartChains"></canvas></div>
+          </div>
+          <div class="admin-card admin-chart-card admin-chart-small">
+            <div class="admin-card-header"><span class="admin-card-title">Top Collections by Staked</span></div>
+            <div class="admin-chart-wrap"><canvas id="chartTopColls"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FINANCIAL CONTROLS -->
+      <div class="admin-page" id="apage-financial">
+        <div class="admin-two-col" style="margin-bottom:20px;">
+          <div class="admin-card">
+            <div class="admin-card-header"><span class="admin-card-title">Platform Fees</span></div>
+            <div class="admin-config-form">
+              <div class="admin-config-row">
+                <label class="admin-config-label">Raffle Platform Fee</label>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <input type="range" id="raffleFeeSlider" min="0" max="10" step="0.5" value="2.5" oninput="document.getElementById('raffleFeeVal').textContent=this.value+'%'" style="width:100px;">
+                  <span id="raffleFeeVal" style="font-size:13px;font-weight:600;color:var(--accent);min-width:36px;">2.5%</span>
+                </div>
+              </div>
+              <div class="admin-config-row">
+                <label class="admin-config-label">Staking Platform Cut</label>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <input type="range" id="stakingCutSlider" min="0" max="20" step="1" value="5" oninput="document.getElementById('stakingCutVal').textContent=this.value+'%'" style="width:100px;">
+                  <span id="stakingCutVal" style="font-size:13px;font-weight:600;color:var(--accent);min-width:36px;">5%</span>
+                </div>
+              </div>
+              <div class="admin-config-row">
+                <label class="admin-config-label">Min Ticket Price</label>
+                <input type="number" class="admin-input-sm" value="10" id="minTicketPrice">
+              </div>
+              <div class="admin-config-row">
+                <label class="admin-config-label">Max Ticket Price</label>
+                <input type="number" class="admin-input-sm" value="10000" id="maxTicketPrice">
+              </div>
+              <button class="admin-save-btn" onclick="adminToast('Fee settings saved','success')">Save Fee Settings</button>
+            </div>
+          </div>
+          <div class="admin-card">
+            <div class="admin-card-header"><span class="admin-card-title">Creator Limits</span></div>
+            <div class="admin-config-form">
+              <div class="admin-config-row">
+                <label class="admin-config-label">Max Reward Rate (pts/NFT/day)</label>
+                <input type="number" class="admin-input-sm" value="100" id="maxRewardRate">
+              </div>
+              <div class="admin-config-row">
+                <label class="admin-config-label">Min Reward Rate</label>
+                <input type="number" class="admin-input-sm" value="1" id="minRewardRate">
+              </div>
+              <div class="admin-config-row">
+                <label class="admin-config-label">Max Raffle Duration (hrs)</label>
+                <input type="number" class="admin-input-sm" value="168" id="maxRaffleDur">
+              </div>
+              <div class="admin-config-row">
+                <label class="admin-config-label">Require Collection Approval</label>
+                <label class="admin-toggle-sm"><input type="checkbox" id="requireCollApproval" checked><span class="admin-toggle-track-sm"></span></label>
+              </div>
+              <div class="admin-config-row">
+                <label class="admin-config-label">Require Raffle Approval</label>
+                <label class="admin-toggle-sm"><input type="checkbox" id="requireRaffleApproval"><span class="admin-toggle-track-sm"></span></label>
+              </div>
+              <div class="admin-config-row">
+                <label class="admin-config-label">Creator Can Edit Rate</label>
+                <label class="admin-toggle-sm"><input type="checkbox" id="creatorEditRate" checked><span class="admin-toggle-track-sm"></span></label>
+              </div>
+              <button class="admin-save-btn" onclick="adminToast('Creator limits saved','success')">Save Limits</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-two-col" style="margin-bottom:20px;">
+          <div class="admin-card">
+            <div class="admin-card-header"><span class="admin-card-title">Token Operations</span></div>
+            <div class="admin-config-form">
+              <div class="admin-section-label">Cut / Burn Tokens</div>
+              <div class="admin-config-row"><label class="admin-config-label">Wallet Address</label><input type="text" class="admin-input-sm" id="burnWallet" placeholder="0x..." style="width:160px;"></div>
+              <div class="admin-config-row"><label class="admin-config-label">Amount</label><input type="number" class="admin-input-sm" id="burnAmount" placeholder="1000"></div>
+              <div class="admin-config-row"><label class="admin-config-label">Token</label><input type="text" class="admin-input-sm" id="burnToken" placeholder="$REBEL" style="width:80px;"></div>
+              <div class="admin-config-row"><label class="admin-config-label">Reason</label><input type="text" class="admin-input-sm" id="burnReason" placeholder="Violation" style="width:160px;"></div>
+              <button class="admin-danger-btn" style="margin-top:4px;" onclick="adminBurnTokens()">Cut / Burn Tokens</button>
+              <div class="admin-section-label" style="margin-top:16px;">Airdrop Tokens</div>
+              <div class="admin-config-row"><label class="admin-config-label">Wallet Address</label><input type="text" class="admin-input-sm" id="airdropWallet" placeholder="0x..." style="width:160px;"></div>
+              <div class="admin-config-row"><label class="admin-config-label">Amount</label><input type="number" class="admin-input-sm" id="airdropAmount" placeholder="500"></div>
+              <div class="admin-config-row"><label class="admin-config-label">Token</label><input type="text" class="admin-input-sm" id="airdropToken" placeholder="$REBEL" style="width:80px;"></div>
+              <button class="admin-save-btn" onclick="adminAirdrop()">Send Airdrop</button>
+            </div>
+          </div>
+          <div class="admin-card">
+            <div class="admin-card-header"><span class="admin-card-title">Bulk Airdrop</span></div>
+            <div class="admin-config-form">
+              <div class="admin-section-label">One wallet per line: wallet,amount</div>
+              <textarea class="admin-textarea" id="bulkAirdropData" rows="8" placeholder="cosmos1abc...1234,500&#10;cosmos1def...5678,1000&#10;0xabc...def1,250"></textarea>
+              <div class="admin-config-row" style="margin-top:8px;"><label class="admin-config-label">Token</label><input type="text" class="admin-input-sm" id="bulkAirdropToken" placeholder="$REBEL" style="width:80px;"></div>
+              <button class="admin-save-btn" onclick="adminBulkAirdrop()">Send Bulk Airdrop</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-header"><span class="admin-card-title">Creator Blacklist</span></div>
+          <div style="padding:16px 20px;">
+            <div style="display:flex;gap:10px;margin-bottom:16px;">
+              <input type="text" class="admin-search" id="blacklistInput" placeholder="Wallet address to blacklist...">
+              <button class="admin-save-btn" style="white-space:nowrap;" onclick="addToBlacklist()">Add to Blacklist</button>
+            </div>
+            <div id="blacklistTable"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RISK MANAGEMENT -->
+      <div class="admin-page" id="apage-risk">
+        <div class="admin-risk-grid" style="margin-bottom:20px;">
+          <div class="admin-risk-card low"><div class="admin-risk-icon">🌱</div><div class="admin-risk-label">Farming Risk</div><div class="admin-risk-status low">LOW</div><div class="admin-risk-desc">No unusual multi-wallet patterns detected</div></div>
+          <div class="admin-risk-card medium"><div class="admin-risk-icon">⚠️</div><div class="admin-risk-label">Rug Pull Risk</div><div class="admin-risk-status medium">MEDIUM</div><div class="admin-risk-desc">2 collections with unverified contracts</div></div>
+          <div class="admin-risk-card low"><div class="admin-risk-icon">🤖</div><div class="admin-risk-label">Bot Activity</div><div class="admin-risk-status low">LOW</div><div class="admin-risk-desc">Claim patterns look normal</div></div>
+          <div class="admin-risk-card high"><div class="admin-risk-icon">📈</div><div class="admin-risk-label">Token Inflation</div><div class="admin-risk-status high">HIGH</div><div class="admin-risk-desc">3 collections with rate > 80 pts/day</div></div>
+          <div class="admin-risk-card low"><div class="admin-risk-icon">🎰</div><div class="admin-risk-label">Raffle Manipulation</div><div class="admin-risk-status low">LOW</div><div class="admin-risk-desc">No creator self-buying detected</div></div>
+          <div class="admin-risk-card medium"><div class="admin-risk-icon">🔄</div><div class="admin-risk-label">Wash Trading</div><div class="admin-risk-status medium">MEDIUM</div><div class="admin-risk-desc">1 wallet with suspicious stake/unstake pattern</div></div>
+        </div>
+
+        <div class="admin-two-col" style="margin-bottom:20px;">
+          <div class="admin-card">
+            <div class="admin-card-header"><span class="admin-card-title">Auto-Protection Rules</span></div>
+            <div class="admin-config-form">
+              <div class="admin-config-row"><label class="admin-config-label">Max Claims / Wallet / Day</label><input type="number" class="admin-input-sm" value="5" id="maxClaimsDay"></div>
+              <div class="admin-config-row"><label class="admin-config-label">Max Stake / Wallet / Collection</label><input type="number" class="admin-input-sm" value="20" id="maxStakeColl"></div>
+              <div class="admin-config-row"><label class="admin-config-label">Claim Cooldown (minutes)</label><input type="number" class="admin-input-sm" value="60" id="claimCooldown"></div>
+              <div class="admin-config-row"><label class="admin-config-label">Flag if Claims > X / Hour</label><input type="number" class="admin-input-sm" value="3" id="flagClaimsHour"></div>
+              <div class="admin-config-row"><label class="admin-config-label">Auto-ban if Flagged > X Times</label><input type="number" class="admin-input-sm" value="5" id="autoBanFlags"></div>
+              <div class="admin-config-row"><label class="admin-config-label">Min Wallet Age to Stake (days)</label><input type="number" class="admin-input-sm" value="7" id="minWalletAge"></div>
+              <button class="admin-save-btn" onclick="adminToast('Protection rules saved','success')">Save Rules</button>
+            </div>
+          </div>
+          <div class="admin-card">
+            <div class="admin-card-header"><span class="admin-card-title">Suspicious Activity Feed</span></div>
+            <div id="suspiciousFeed" style="padding:8px 0;"></div>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <span class="admin-card-title">Flagged Wallets</span>
+            <span style="font-size:12px;color:var(--red);font-weight:600;" id="flaggedCount">3 flagged</span>
+          </div>
+          <table class="admin-table" id="flaggedTable">
+            <thead><tr><th>Wallet</th><th>Chain</th><th>Reason</th><th>Flagged At</th><th>Auto-ban</th><th>Actions</th></tr></thead>
+            <tbody id="flaggedTableBody"><!-- flagged rows --></tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+
+      <!-- SYSTEM DOCS -->
+      <div class="admin-page" id="apage-docs">
+        <div class="admin-card" style="padding: 0;">
+          <div id="adminDocsContent"></div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="admin-modal-overlay" id="adminModalOverlay" onclick="if(event.target===this)closeAdminModal()">
+  <div class="admin-modal" id="adminModal">
+    <div class="admin-modal-header">
+      <h3 class="admin-modal-title" id="adminModalTitle">Modal</h3>
+      <button class="admin-modal-close" onclick="closeAdminModal()">✕</button>
+    </div>
+    <div class="admin-modal-body" id="adminModalBody"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="adminToastContainer"></div>
+
+<link rel="stylesheet" href="admin_docs.css">
+<script src="admin_docs.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
