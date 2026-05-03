@@ -1908,7 +1908,7 @@ body,.sidebar,.topbar,button,input,select,textarea{font-family:var(--font-main);
   border-radius: 999px !important;
 }
 
-/* ===== FIX ZOOM CLIPPING — ticker dan dropdown tidak terpotong ===== */
+/* ===== FIX ZOOM CLIPPING — ticker tidak terpotong saat zoom ===== */
 .ticker-section {
   overflow: visible !important;
 }
@@ -1916,13 +1916,32 @@ body,.sidebar,.topbar,button,input,select,textarea{font-family:var(--font-main);
   overflow-x: auto !important;
   overflow-y: visible !important;
 }
-/* Pastikan content area tidak clip elemen yang overflow ke atas */
+/* Content area boleh scroll vertikal, tapi jangan clip overflow-y dari ticker */
 .content {
-  overflow-x: visible !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+/* ===== FIX TOPBAR — pastikan tombol kanan selalu keliatan ===== */
+.topbar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  flex-shrink: 0 !important;
+  min-width: 0 !important;
+}
+.topbar-right {
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+.topbar-search {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  max-width: 420px !important;
 }
 .main-content-area {
-  overflow: visible !important;
-}
-.main-wrapper {
-  overflow: visible !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
 }

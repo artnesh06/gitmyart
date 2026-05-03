@@ -281,7 +281,7 @@ function MysteryPackCard() {
         <div style={{
           width:200, height:290, borderRadius:'var(--radius)',
           background:'linear-gradient(160deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%)',
-          border:'2px solid rgba(124,58,237,0.5)',
+          border:'2px solid #7c3aed',
           display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
           position:'relative', overflow:'hidden', transition:'transform 0.2s',
         }}
