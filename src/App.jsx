@@ -30,7 +30,7 @@ function AppContent() {
   const [rightPanelSection, setRightPanelSection] = useState(null)
 
   return (
-    <div className="app sidebar-collapsed">
+    <div className={`app ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
       <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} />
       
       <div className="main-wrapper">
@@ -57,7 +57,6 @@ function AppContent() {
           <MainContent />
         </div>
 
-        <div className="rpanel-resize-handle" id="rpanelResizeHandle" title="Drag to resize"></div>
         <RightPanel 
           open={rightPanelOpen} 
           section={rightPanelSection}
