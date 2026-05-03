@@ -4,18 +4,28 @@ const { db, run, all, setConfig } = require('./db');
 console.log('[SEED] Seeding demo data...');
 
 // ===== COLLECTIONS =====
-// MegaRebel NFT images from OpenSea
+// MegaRebel NFT images - real images from OpenSea CDN (i2c.seadn.io)
 const megaRebelImages = [
-  'https://i.seadn.io/gcs/static/opensea-prod/image/upload/t_original/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/1.png',
-  'https://i.seadn.io/gcs/static/opensea-prod/image/upload/t_original/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/2.png',
-  'https://i.seadn.io/gcs/static/opensea-prod/image/upload/t_original/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/3.png',
-  'https://i.seadn.io/gcs/static/opensea-prod/image/upload/t_original/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/4.png',
-  'https://i.seadn.io/gcs/static/opensea-prod/image/upload/t_original/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/5.png',
-  'https://i.seadn.io/gcs/static/opensea-prod/image/upload/t_original/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/6.png',
-  'https://i.seadn.io/gcs/static/opensea-prod/image/upload/t_original/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/7.png',
-  'https://i.seadn.io/gcs/static/opensea-prod/image/upload/t_original/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/8.png',
-  'https://i.seadn.io/gcs/static/opensea-prod/image/upload/t_original/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/9.png',
-  'https://i.seadn.io/gcs/static/opensea-prod/image/upload/t_original/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/10.png',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/373f88cea82b8a480d2b2debebebb4/fc373f88cea82b8a480d2b2debebebb4.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/7cbfe0122c9009bf5488bc67c24ce8/817cbfe0122c9009bf5488bc67c24ce8.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/e92cfaf6b7d8374fccab2c59a43865/68e92cfaf6b7d8374fccab2c59a43865.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/9bd966398679eb141a0ab8f0775b4b/119bd966398679eb141a0ab8f0775b4b.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/038a27ca06b9325ef860eed85e38e7/0b038a27ca06b9325ef860eed85e38e7.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/c103c8a1ef82658fb71d040a023e0c/8dc103c8a1ef82658fb71d040a023e0c.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/cb5eb8c43acd3de45413ed0d2e0412/a6cb5eb8c43acd3de45413ed0d2e0412.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/60655a59f68eefb6422ff1f53095bd/9d60655a59f68eefb6422ff1f53095bd.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/f6db78d0a9ecc00cc1be65a8405b27/3cf6db78d0a9ecc00cc1be65a8405b27.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/90b547c7d50c7adfe0c8fa6e4152e9/4c90b547c7d50c7adfe0c8fa6e4152e9.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/f42a71ad0168e1d30031d4ddab4047/55f42a71ad0168e1d30031d4ddab4047.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/a2600c90eddc1391796c509b243e9f/1aa2600c90eddc1391796c509b243e9f.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/4f7f59de7657bbca51dc41052cacbb/914f7f59de7657bbca51dc41052cacbb.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/bbcf12e9ac90946819956b1150fec4/bebbcf12e9ac90946819956b1150fec4.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/5b983592faf1b63c46296bf09d348e/255b983592faf1b63c46296bf09d348e.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/3b2332eda13fda2f20f8cdc37287e3/723b2332eda13fda2f20f8cdc37287e3.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/63aa8e2918c1c8931fa0d0478a890c/4963aa8e2918c1c8931fa0d0478a890c.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/f4267505f6a49182b6b06eb3741498/49f4267505f6a49182b6b06eb3741498.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/fab8cdcba3cef71f3be8419c282f83/8efab8cdcba3cef71f3be8419c282f83.png?w=500',
+  'https://i2c.seadn.io/megaeth/0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac/c12763fdf5129bc4d5823a9ca99c63/66c12763fdf5129bc4d5823a9ca99c63.png?w=500',
 ];
 
 const collections = [
