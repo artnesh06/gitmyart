@@ -147,8 +147,8 @@ export default function HomePage() {
             const prize = r.prize || r.prizeValue || '—'
             const img = r.img || r.image || `https://picsum.photos/seed/raffle${r.id}/400/400`
             return (
-              <div key={r.id} className="coll-card" style={{ flex: '0 0 220px', scrollSnapAlign: 'start' }}>
-                <div className="coll-card-img">
+              <div key={r.id} className="coll-card" style={{ flex: '0 0 290px', scrollSnapAlign: 'start' }}>
+                <div className="coll-card-img" style={{ width: 290, height: 290 }}>
                   <img src={img} alt={name} />
 
                   {/* Live badge */}
@@ -156,8 +156,8 @@ export default function HomePage() {
                     <span className="live-dot"></span> LIVE
                   </div>
 
-                  {/* Default overlay: entries + token — hilang saat hover */}
-                  <div className="coll-card-name-overlay">
+                  {/* Default overlay: nama di atas, entries di bawah */}
+                  <div className="coll-card-name-overlay" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 2 }}>
                     <span className="coll-card-name">{name}</span>
                     <span className="coll-card-staked">{Number(entries).toLocaleString()} entries</span>
                   </div>
@@ -211,8 +211,8 @@ export default function HomePage() {
             const img = coll.img || coll.image || `https://picsum.photos/seed/coll${coll.id}/400/400`
             const badge = coll.badge || null
             return (
-              <div key={coll.id} className="coll-card" style={{ flex: '0 0 220px', scrollSnapAlign: 'start' }}>
-                <div className="coll-card-img">
+              <div key={coll.id} className="coll-card" style={{ flex: '0 0 290px', scrollSnapAlign: 'start' }}>
+                <div className="coll-card-img" style={{ width: 290, height: 290 }}>
                   <img src={img} alt={name} />
 
                   {/* Badge pojok kiri atas */}
@@ -222,8 +222,8 @@ export default function HomePage() {
                     </div>
                   )}
 
-                  {/* Default overlay: nama + staked count — hilang saat hover */}
-                  <div className="coll-card-name-overlay">
+                  {/* Default overlay: nama di atas, staked di bawah */}
+                  <div className="coll-card-name-overlay" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 2 }}>
                     <span className="coll-card-name">{name}</span>
                     <span className="coll-card-staked">{Number(staked).toLocaleString()} staked</span>
                   </div>

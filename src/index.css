@@ -1827,11 +1827,11 @@ body,.sidebar,.topbar,button,input,select,textarea{font-family:var(--font-main);
 
 /* ===== COLLECTION CARDS IN HORIZONTAL SCROLL ===== */
 .trending-track .coll-card {
-  flex: 0 0 220px;
+  flex: 0 0 290px;
   scroll-snap-align: start;
-  min-width: 220px;
+  min-width: 290px;
 }
 .trending-track .coll-card .coll-card-img {
-  width: 220px;
-  height: 220px;
+  width: 290px;
+  height: 290px;
 }
