@@ -176,33 +176,26 @@ export default function HomePage() {
       <div className="explore-section">
         <div className="trending-header">
           <span className="section-title">Explore Collection</span>
-          <div className="explore-tabs">
-            {EXPLORE_TABS.map(tab => (
-              <button
-                key={tab}
-                className={`explore-tab${exploreTab === tab ? ' active' : ''}`}
-                onClick={() => setExploreTab(tab)}
-              >
-                {tab}
-              </button>
-            ))}
-            <div className="explore-tab-actions">
-              <button className="tab-action-btn" title="Grid view">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-                  <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
-                </svg>
-              </button>
-              <button className="tab-action-btn" title="List view">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/>
-                  <line x1="3" y1="18" x2="21" y2="18"/>
-                </svg>
-              </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div className="explore-tabs" style={{ marginBottom: 0 }}>
+              {EXPLORE_TABS.map(tab => (
+                <button
+                  key={tab}
+                  className={`explore-tab${exploreTab === tab ? ' active' : ''}`}
+                  onClick={() => setExploreTab(tab)}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+            <div className="trending-nav">
+              <button className="trend-arrow" onClick={() => scrollTrack(collectionRef, -320)}>&#8249;</button>
+              <button className="trend-arrow" onClick={() => scrollTrack(collectionRef, 320)}>&#8250;</button>
             </div>
           </div>
         </div>
-        <div className="collection-grid" id="collectionGrid">
+        {/* Horizontal scroll track — same style as trending raffle */}
+        <div className="trending-track" id="collectionTrack" ref={collectionRef}>
           {collections.map(coll => {
             const name = coll.name || 'Collection'
             const staked = coll.staked ?? coll.stakers ?? coll.stakedCount ?? 0
@@ -212,25 +205,26 @@ export default function HomePage() {
             return (
               <div
                 key={coll.id}
-                className="coll-card"
+                className="trending-card"
                 onClick={() => alert(`Open collection: ${name}`)}
               >
-                <div className="coll-card-img">
+                <div className="trending-img">
                   <img src={img} alt={name} />
                   {badge && (
-                    <div className={`coll-badge ${badge}`}>
+                    <div className={`coll-badge ${badge}`} style={{ zIndex: 4 }}>
                       {badge.charAt(0).toUpperCase() + badge.slice(1)}
                     </div>
                   )}
-                  <div className="coll-card-name-overlay">
-                    <span className="coll-card-name">{name}</span>
-                    <span className="coll-card-staked">{staked} staked</span>
+                  <div className="trending-overlay">
+                    <div className="trending-mcap">{staked.toLocaleString()} staked</div>
+                    <div className="trending-label">{name}</div>
+                    <div className="trending-ticker">NFT Collection</div>
                   </div>
-                  <div className="coll-card-overlay">
-                    <div className="coll-overlay-name">{name}</div>
-                    <div className="coll-overlay-desc">{desc}</div>
-                    <button className="coll-overlay-btn stake">Stake NFT</button>
-                  </div>
+                  <div className="raffle-hover-btn"><span>Stake NFT</span></div>
+                </div>
+                <div className="trending-bottom">
+                  <div className="trending-live-dot"></div>
+                  {desc.length > 40 ? desc.slice(0, 40) + '…' : desc}
                 </div>
               </div>
             )

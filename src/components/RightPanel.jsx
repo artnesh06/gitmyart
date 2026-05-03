@@ -2,11 +2,27 @@ import React, { useContext, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import { ThemeContext } from '../context/ThemeContext'
 
-const CHAINS = {
-  atom: { name: 'Cosmos', symbol: 'ATOM', icon: '🌍' },
-  megaeth: { name: 'MegaETH', symbol: 'METH', icon: '⚡' },
-  ethereum: { name: 'Ethereum', symbol: 'ETH', icon: '🔷' },
-}
+// MegaETH first (default), then others
+const CHAINS = [
+  { key: 'megaeth', name: 'MegaETH', symbol: 'METH', icon: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+    </svg>
+  )},
+  { key: 'atom', name: 'Cosmos', symbol: 'ATOM', icon: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" strokeWidth="2">
+      <circle cx="12" cy="12" r="2.5"/>
+      <ellipse cx="12" cy="12" rx="10" ry="4"/>
+      <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/>
+      <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>
+    </svg>
+  )},
+  { key: 'ethereum', name: 'Ethereum', symbol: 'ETH', icon: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" strokeWidth="2">
+      <polygon points="12 2 2 12 12 22 22 12"/>
+    </svg>
+  )},
+]
 
 const NOTIFICATIONS = [
   { icon: '🎉', text: 'New raffle <b>Mega Jackpot</b> just launched!', time: '2m ago' },
@@ -227,12 +243,26 @@ export default function RightPanel({ open, section, onClose }) {
             {notifs.length === 0
               ? <div style={{ padding: '32px 20px', textAlign: 'center', color: 'var(--t3)', fontSize: 14 }}>No notifications</div>
               : notifs.map((n, i) => (
-                <div key={i} className="notif-item">
+                <div key={i} className="notif-item" style={{ position: 'relative' }}>
                   <div className="notif-icon">{n.icon}</div>
                   <div className="notif-body">
                     <div className="notif-text" dangerouslySetInnerHTML={{ __html: n.text }} />
                     <div className="notif-time">{n.time}</div>
                   </div>
+                  <button
+                    onClick={() => setNotifs(prev => prev.filter((_, idx) => idx !== i))}
+                    style={{
+                      position: 'absolute', top: 10, right: 12,
+                      width: 20, height: 20, borderRadius: '50%',
+                      background: 'var(--bg-hover)', border: '1px solid var(--border)',
+                      color: 'var(--t3)', fontSize: 11, cursor: 'pointer',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      lineHeight: 1, flexShrink: 0,
+                      transition: 'all .12s',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = 'var(--red)'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'var(--red)' }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg-hover)'; e.currentTarget.style.color = 'var(--t3)'; e.currentTarget.style.borderColor = 'var(--border)' }}
+                  >✕</button>
                 </div>
               ))}
           </div>
@@ -446,12 +476,12 @@ export default function RightPanel({ open, section, onClose }) {
             <span className="rpanel-title">Select Chain</span>
           </div>
           <div className="rpanel-chain-list">
-            {Object.entries(CHAINS).map(([key, chain]) => (
-              <button key={key} className={`rpanel-chain-opt${activeChain === key ? ' active' : ''}`}
-                onClick={() => { setActiveChain(key); onClose() }}>
-                <span style={{ fontSize: 20, lineHeight: 1 }}>{chain.icon}</span>
+            {CHAINS.map((chain) => (
+              <button key={chain.key} className={`rpanel-chain-opt${activeChain === chain.key ? ' active' : ''}`}
+                onClick={() => { setActiveChain(chain.key); onClose() }}>
+                <span style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>{chain.icon}</span>
                 <span style={{ flex: 1 }}>{chain.name} ({chain.symbol})</span>
-                {activeChain === key && (
+                {activeChain === chain.key && (
                   <svg className="rpanel-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ display: 'block' }}>
                     <polyline points="20 6 9 17 4 12" />
                   </svg>

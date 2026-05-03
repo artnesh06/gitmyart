@@ -65,7 +65,10 @@ export default function Sidebar({ collapsed, onToggle }) {
           </svg>
         </div>
         <div className="logo-wordmark">
-          <img src="/logo.svg" alt="DropStudio" className="logo-wordmark-img" />
+          <span style={{
+            fontSize: 18, fontWeight: 800, color: 'var(--t1)',
+            letterSpacing: '-0.03em', whiteSpace: 'nowrap',
+          }}>Gitmyart</span>
         </div>
       </div>
 
