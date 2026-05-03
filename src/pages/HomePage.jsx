@@ -172,18 +172,19 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* LIVE badge + countdown — di LUAR card, di bawah */}
+                {/* LIVE badge + countdown — di LUAR card, di bawah, no background */}
                 <div style={{
                   display: 'flex', alignItems: 'center', gap: 8,
-                  padding: '8px 4px 2px',
+                  padding: '8px 2px 0',
                   fontSize: 13, fontWeight: 600,
+                  background: 'none', border: 'none',
                 }}>
                   <span style={{
                     display: 'flex', alignItems: 'center', gap: 5,
-                    background: 'rgba(74,222,128,.12)', color: 'var(--green)',
-                    padding: '3px 10px', borderRadius: 999, fontSize: 12, fontWeight: 700,
+                    color: 'var(--green)',
+                    fontSize: 13, fontWeight: 700,
                   }}>
-                    <span className="live-dot" style={{ width: 6, height: 6 }}></span>
+                    <span className="live-dot" style={{ width: 7, height: 7 }}></span>
                     LIVE
                   </span>
                   <span style={{ color: 'var(--green)', fontSize: 13, fontWeight: 600 }}>

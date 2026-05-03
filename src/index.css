@@ -1847,3 +1847,18 @@ body,.sidebar,.topbar,button,input,select,textarea{font-family:var(--font-main);
   color: rgba(255,255,255,0.7) !important;
   font-weight: 500 !important;
 }
+
+/* ===== RAFFLE CARD IN TRENDING TRACK — no border below image ===== */
+.trending-track .coll-card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.trending-track .coll-card .coll-card-img {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+.trending-track .coll-card:hover .coll-card-img {
+  border-color: var(--border-l);
+  box-shadow: var(--shadow);
+}
