@@ -1797,3 +1797,30 @@ body,.sidebar,.topbar,button,input,select,textarea{font-family:var(--font-main);
   background: var(--accent);
   color: #fff;
 }
+
+/* ===== TRENDING CARD — proper card with bg + border ===== */
+.trending-card {
+  background: var(--bg-s);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.trending-card:hover {
+  border-color: var(--border-l);
+  box-shadow: var(--shadow);
+}
+.trending-card .trending-img {
+  border-radius: 0;
+}
+.trending-bottom {
+  padding: 10px 14px 12px !important;
+  margin-top: 0 !important;
+  color: var(--t1) !important;
+}
+
+/* Active topbar button */
+.topbar-btn-active {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #fff !important;
+}

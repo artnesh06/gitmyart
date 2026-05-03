@@ -151,27 +151,21 @@ export default function HomePage() {
                 {/* Square image with overlays */}
                 <div className="trending-img">
                   <img src={img} alt={name} />
-
                   {/* Bottom gradient overlay — always visible */}
                   <div className="trending-overlay">
                     <div className="trending-mcap">{entries.toLocaleString()}</div>
-                    <div className="trending-label">{name}</div>
                     <div className="trending-ticker">{token}</div>
                   </div>
-
-                  {/* Hover overlay — "Enter Raffle" button */}
-                  <div className="raffle-hover-btn">
-                    <span>Enter Raffle</span>
-                  </div>
+                  {/* Hover overlay */}
+                  <div className="raffle-hover-btn"><span>Enter Raffle</span></div>
                 </div>
-
-                {/* Below image: title + subtitle */}
-                <div style={{ padding: '10px 4px 4px' }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--t1)', marginBottom: 3 }}>{name}</div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ fontSize: 12, color: 'var(--t3)', fontWeight: 600 }}>{token} · Prize: {prize}</span>
+                {/* Title + subtitle INSIDE card, below image */}
+                <div className="trending-bottom" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 4, padding: '10px 2px 2px' }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--t1)', lineHeight: 1.3 }}>{name}</div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                    <span style={{ fontSize: 12, color: 'var(--t3)', fontWeight: 500 }}>{token} · {prize}</span>
                     <span style={{ fontSize: 12, color: 'var(--green)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
-                      <span className="trending-live-dot" style={{ width: 6, height: 6 }}></span>
+                      <span className="trending-live-dot" style={{ width: 6, height: 6, flexShrink: 0 }}></span>
                       {endsIn}
                     </span>
                   </div>
@@ -209,7 +203,6 @@ export default function HomePage() {
           {collections.map(coll => {
             const name = coll.name || 'Collection'
             const staked = coll.staked ?? coll.stakers ?? coll.stakedCount ?? 0
-            const desc = coll.desc || coll.description || 'Stake NFTs to earn daily rewards.'
             const rewardRate = coll.rewardRate || coll.reward_rate || null
             const floorPrice = coll.floorPrice || coll.floor_price || null
             const img = coll.img || coll.image || `https://picsum.photos/seed/coll${coll.id}/400/400`
@@ -219,39 +212,28 @@ export default function HomePage() {
                 {/* Square image with overlays */}
                 <div className="trending-img">
                   <img src={img} alt={name} />
-
-                  {/* Badge */}
                   {badge && (
                     <div className={`coll-badge ${badge}`} style={{ zIndex: 4 }}>
                       {badge.charAt(0).toUpperCase() + badge.slice(1)}
                     </div>
                   )}
-
-                  {/* Bottom gradient overlay — always visible */}
+                  {/* Bottom gradient overlay */}
                   <div className="trending-overlay">
                     <div className="trending-mcap">{staked.toLocaleString()} staked</div>
-                    <div className="trending-label">{name}</div>
                     <div className="trending-ticker">NFT Collection</div>
                   </div>
-
-                  {/* Hover overlay — "Stake NFT" button */}
-                  <div className="raffle-hover-btn">
-                    <span>Stake NFT</span>
-                  </div>
+                  {/* Hover overlay */}
+                  <div className="raffle-hover-btn"><span>Stake NFT</span></div>
                 </div>
-
-                {/* Below image: title + subtitle */}
-                <div style={{ padding: '10px 4px 4px' }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--t1)', marginBottom: 3 }}>{name}</div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ fontSize: 12, color: 'var(--t3)', fontWeight: 600 }}>
-                      {staked.toLocaleString()} stakers
-                      {floorPrice ? ` · ${floorPrice}` : ''}
+                {/* Title + subtitle INSIDE card, below image */}
+                <div className="trending-bottom" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 4, padding: '10px 2px 2px' }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--t1)', lineHeight: 1.3 }}>{name}</div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                    <span style={{ fontSize: 12, color: 'var(--t3)', fontWeight: 500 }}>
+                      {staked.toLocaleString()} stakers{floorPrice ? ` · ${floorPrice}` : ''}
                     </span>
                     {rewardRate && (
-                      <span style={{ fontSize: 12, color: 'var(--green)', fontWeight: 700 }}>
-                        +{rewardRate} pts/day
-                      </span>
+                      <span style={{ fontSize: 12, color: 'var(--green)', fontWeight: 700 }}>+{rewardRate} pts/day</span>
                     )}
                   </div>
                 </div>

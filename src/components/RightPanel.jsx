@@ -237,7 +237,10 @@ export default function RightPanel({ open, section, onClose }) {
         <div className={`rpanel-section${section === 'notif' && open ? ' active' : ''}`}>
           <div className="rpanel-header">
             <span className="rpanel-title">Notifications</span>
-            <button className="notif-clear" onClick={() => setNotifs([])}>Clear all</button>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <button className="notif-clear" onClick={() => setNotifs([])}>Clear all</button>
+              <button onClick={onClose} style={{ width: 28, height: 28, borderRadius: 8, border: '1px solid var(--border)', background: 'transparent', color: 'var(--t3)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>✕</button>
+            </div>
           </div>
           <div style={{ overflowY: 'auto', flex: 1 }}>
             {notifs.length === 0
@@ -272,7 +275,10 @@ export default function RightPanel({ open, section, onClose }) {
         <div className={`rpanel-section${section === 'settings' && open ? ' active' : ''}`}>
           <div className="rpanel-header">
             <span className="rpanel-title">Settings</span>
-            <button className="settings-header-save" onClick={onClose}>Save</button>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <button className="settings-header-save" onClick={onClose}>Save</button>
+              <button onClick={onClose} style={{ width: 28, height: 28, borderRadius: 8, border: '1px solid var(--border)', background: 'transparent', color: 'var(--t3)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>✕</button>
+            </div>
           </div>
           <div className="settings-body">
 
@@ -474,6 +480,7 @@ export default function RightPanel({ open, section, onClose }) {
         <div className={`rpanel-section${section === 'chain' && open ? ' active' : ''}`}>
           <div className="rpanel-header">
             <span className="rpanel-title">Select Chain</span>
+            <button onClick={onClose} style={{ width: 28, height: 28, borderRadius: 8, border: '1px solid var(--border)', background: 'transparent', color: 'var(--t3)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>✕</button>
           </div>
           <div className="rpanel-chain-list">
             {CHAINS.map((chain) => (
@@ -495,6 +502,7 @@ export default function RightPanel({ open, section, onClose }) {
         <div className={`rpanel-section${section === 'profile' && open ? ' active' : ''}`}>
           <div className="rpanel-header">
             <span className="rpanel-title">Profile</span>
+            <button onClick={onClose} style={{ width: 28, height: 28, borderRadius: 8, border: '1px solid var(--border)', background: 'transparent', color: 'var(--t3)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>✕</button>
           </div>
           <div className="rpanel-profile-card">
             <div className="rpanel-profile-avatar">

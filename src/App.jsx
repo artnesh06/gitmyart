@@ -29,6 +29,17 @@ function AppContent() {
   const [rightPanelOpen, setRightPanelOpen] = useState(false)
   const [rightPanelSection, setRightPanelSection] = useState(null)
 
+  // Toggle: klik tombol yang sama = tutup panel
+  function openPanel(sec) {
+    if (rightPanelOpen && rightPanelSection === sec) {
+      setRightPanelOpen(false)
+      setRightPanelSection(null)
+    } else {
+      setRightPanelOpen(true)
+      setRightPanelSection(sec)
+    }
+  }
+
   return (
     <div className={`app ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
       <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(!sidebarCollapsed)} />
@@ -36,22 +47,11 @@ function AppContent() {
       <div className="main-wrapper">
         <div className="main-content-area">
           <Topbar 
-            onChainClick={() => {
-              setRightPanelOpen(true)
-              setRightPanelSection('chain')
-            }}
-            onSettingsClick={() => {
-              setRightPanelOpen(true)
-              setRightPanelSection('settings')
-            }}
-            onNotifClick={() => {
-              setRightPanelOpen(true)
-              setRightPanelSection('notif')
-            }}
-            onProfileClick={() => {
-              setRightPanelOpen(true)
-              setRightPanelSection('profile')
-            }}
+            activeSection={rightPanelOpen ? rightPanelSection : null}
+            onChainClick={() => openPanel('chain')}
+            onSettingsClick={() => openPanel('settings')}
+            onNotifClick={() => openPanel('notif')}
+            onProfileClick={() => openPanel('profile')}
           />
           
           <MainContent />
@@ -60,7 +60,7 @@ function AppContent() {
         <RightPanel 
           open={rightPanelOpen} 
           section={rightPanelSection}
-          onClose={() => setRightPanelOpen(false)}
+          onClose={() => { setRightPanelOpen(false); setRightPanelSection(null) }}
         />
       </div>
     </div>
