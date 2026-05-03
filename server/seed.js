@@ -19,7 +19,7 @@ const collections = [
   { id:'col-mega-3', chain:'megaeth', name:'HelpPaws', ticker:'PAWS', contract_addr:'0x9fT...paws', image_url:'https://picsum.photos/seed/paws/400/400', creator:'0x9fT...k2w', floor_price:0.15, reward_per_day:6.0, badge:'charity' },
   { id:'col-mega-4', chain:'megaeth', name:'PixelPunk', ticker:'PXPK', contract_addr:'0x6gH...pxpk', image_url:'https://picsum.photos/seed/pxpk/400/400', creator:'0x6gH...i1u', floor_price:0.02, reward_per_day:15.0, badge:'new' },
   { id:'col-mega-5', chain:'megaeth', name:'RocketDog', ticker:'RDOG', contract_addr:'0x7nO...rdog', image_url:'https://picsum.photos/seed/rdog/400/400', creator:'0x7nO...p7x', floor_price:0.03, reward_per_day:10.0, badge:null },
-  { id:'col-mega-6', chain:'megaeth', name:'MegaRebel', ticker:'MREB', contract_addr:'0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac', image_url:'https://i.seadn.io/gcs/static/opensea-prod/collection/header/megarebel_header_20240115.png', creator:'0xMegaRebel...creator', floor_price:0.25, reward_per_day:20.0, badge:'featured' },
+  { id:'col-mega-6', chain:'megaeth', name:'MegaRebel', ticker:'MREB', contract_addr:'0xeb8a15bb1b9842bee34caf5823bc7a7017c0d4ac', image_url:'https://picsum.photos/seed/megarebel/400/400?random=1', creator:'0xMegaRebel...creator', floor_price:0.25, reward_per_day:20.0, badge:'featured' },
 
   // Ethereum
   { id:'col-eth-1', chain:'ethereum', name:'Bored Apes', ticker:'BAYC', contract_addr:'0xBC4...bayc', image_url:'https://picsum.photos/seed/bayc/400/400', creator:'0xBC4...a1f', floor_price:15.2, reward_per_day:25.0, badge:null },
@@ -90,6 +90,16 @@ for (const w of demoWallets) {
     const tokenId = `token_${w.wallet.slice(-4)}_${i}`;
     const rarity = rarities[Math.floor(Math.random() * rarities.length)];
     insertStake.run(w.wallet, w.chain, tokenId, coll.id, coll.name, `${coll.ticker} #${100 + i}`, `https://picsum.photos/seed/${tokenId}/300/300`, rarity);
+  }
+  
+  // Add sample MegaRebel NFTs for MegaETH user
+  if (w.chain === 'megaeth') {
+    const megaRebelColl = collections.find(c => c.id === 'col-mega-6');
+    for (let j = 0; j < 3; j++) {
+      const tokenId = `mreb_${w.wallet.slice(-4)}_${j}`;
+      const rarity = rarities[Math.floor(Math.random() * rarities.length)];
+      insertStake.run(w.wallet, w.chain, tokenId, megaRebelColl.id, megaRebelColl.name, `MREB #${1000 + j}`, `https://picsum.photos/seed/megarebel_${j}/300/300?random=${j}`, rarity);
+    }
   }
   
   insertLb.run(w.wallet, w.chain, nftCount, points);
